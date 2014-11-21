@@ -1,0 +1,59 @@
+﻿<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>散点图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/scatterchart"
+            ],function(ScatterChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","datetime":"2014-01-01 08:00","报警次数":23},
+                              {"taskName":"任务1","datetime":"2014-01-05 08:00","报警次数":15},
+                              {"taskName":"任务1","datetime":"2014-01-13 08:00","报警次数":18},
+                              {"taskName":"任务1","datetime":"2014-01-25 08:00","报警次数":45},
+                              {"taskName":"任务1","datetime":"2014-02-01 08:00","报警次数":39},
+                              {"taskName":"任务1","datetime":"2014-03-24 08:00","报警次数":35},
+                              {"taskName":"任务1","datetime":"2014-03-30 08:00","报警次数":38},
+                              {"taskName":"任务1","datetime":"2014-05-01 08:00","报警次数":50},
+                              {"taskName":"任务1","datetime":"2014-07-01 08:00","报警次数":27},
+                              {"taskName":"任务1","datetime":"2014-08-01 08:00","报警次数":36},
+    			              {"taskName":"任务2","datetime":"2014-05-01 08:00","报警次数":87},
+    			              {"taskName":"任务2","datetime":"2014-06-01 08:00","报警次数":112},
+    			              {"taskName":"任务2","datetime":"2014-08-01 08:00","报警次数":52},
+    			              {"taskName":"任务2","datetime":"2014-08-11 08:00","报警次数":67},
+    			              {"taskName":"任务2","datetime":"2014-09-08 08:00","报警次数":174},
+    			              {"taskName":"任务2","datetime":"2014-09-19 08:00","报警次数":105},
+    			              {"taskName":"任务2","datetime":"2014-10-01 08:00","报警次数":76},
+    			              {"taskName":"任务2","datetime":"2014-11-16 08:00","报警次数":58},
+    			              {"taskName":"任务2","datetime":"2014-11-23 08:00","报警次数":99},
+    			              {"taskName":"任务2","datetime":"2014-12-01 08:00","报警次数":142}        
+                              ];
+                    var option={
+                        containerId:"container", //放置HighCharts容器对应的ID
+                        shows:["报警次数"],         //要显示的指标
+                        title:"散点图",          //标题
+                        subtitle:"副标题",       //副标题  
+                        yTitle:"次数",         //y轴标题
+                        //yUnit:"kg" ,             //y轴单位
+                        xName:"datetime" ,     //x轴显示的名称
+                        group:"taskName"      //分组依据 
+                    };
+                    
+                    var chart=new ScatterChart();
+                    chart.setData(data);
+                    chart.setOption(option);
+
+                  
+                    chart.draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+    </body>
+</html>

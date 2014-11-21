@@ -1,0 +1,59 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>tcp建联图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/highcharts/highcharts-more.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/tschart"
+            ],function(WaterfallChart){
+                $(function(){
+                    var data=[
+                    {url:"qq",time1:1,start:0,tcp:"11",time2:2,type:"image"},
+                    {url:"qq",time1:2,start:11,tcp:"11",time2:2,type:"image"},
+                    {url:"qq",time1:3,start:26,tcp:"11",time2:2,type:"doc"},
+                    {url:"qq",time1:4,start:47,tcp:"11",time2:2,type:"image"},
+                    {url:"sadfasd",time1:6,start:1,tcp:"12",time2:2,type:"image"},
+                    {url:"sadfasd",time1:5,start:9,tcp:"12",time2:2,type:"doc"},
+                    {url:"sadfasd",time1:2.500,start:15,tcp:"12",time2:2,type:"image"},
+                    {url:"sadfasd",time1:5.000,start:19,tcp:"12",time2:2,type:"doc"},
+                    {url:"sadfasd",time1:1.000,start:22,tcp:"12",time2:2,type:"doc"},
+                    {url:"ddd",time1:10,start:0,tcp:"13",time2:2,type:"doc"},
+                    {url:"tyeme",time1:1.515,start:39.219,tcp:"14",time2:2,type:"doc"},
+                    {url:"tyeme",time1:4.000,start:40.734,tcp:"14",time2:2,type:"css"},
+                    {url:"tyeme",time1:1.000,start:44.734,tcp:"14",time2:2,type:"css"},
+                    {url:"Psdfge",time1:3.500,start:45.734,tcp:"15",time2:2,type:"css"},
+                    {url:"Psdfge",time1:1.500,start:49.234,tcp:"15",time2:2,type:"image"},
+                    {url:"Psdfge",time1:7.000 ,start:50.734,tcp:"15",time2:2,type:"css"},
+                    {url:"Psdfge",time1:2.266,start:57.734,tcp:"15",time2:2,type:"css"}]
+                    var option={
+                        containerId:"container",
+                        shows:["time1"],            //要显示的指标
+                        title:"tcp建联图",       //标题
+                        yTitle:"时间",              //y轴标题
+                        yUnit:"s",                  //y轴单位
+                        startName:"start",
+                        group:"tcp",         
+                        xName:"url",
+                        dimension:"type"
+                    };
+                    var chart=new WaterfallChart();
+                    chart.setData(data);
+                    chart.setOption(option);
+                    // var formatter=function(){
+                    //         return '<b>' + this.x + '</b><br/>'+'<b>' + this.series.name + '</b>:' + this.y ;
+                    // }
+                    // chart.setTooltipFormatter(formatter);
+                    chart.draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+    </body>
+</html>

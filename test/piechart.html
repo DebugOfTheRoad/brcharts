@@ -1,0 +1,39 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>饼图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/piechart"
+            ],function(PieChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000},
+                                {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000},
+                                {"taskName":"任务1","城市":"郑州","在线人数":780000,"报警次数":78000},
+                                {"taskName":"任务1","城市":"广州","在线人数":690000,"报警次数":69000},
+                                {"taskName":"任务1","城市":"上海","在线人数":840000,"报警次数":84000}
+                              ];
+                
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows:["在线人数"],         //要显示的指标
+                        title:"饼图",
+                        xName:"城市"				 
+                    };
+                   
+                    var chart=new PieChart();
+                    chart.setData(data);
+                    chart.setOption(option);    
+                    chart.draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+    </body>
+</html>

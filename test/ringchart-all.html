@@ -1,0 +1,172 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>环图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/ringchart"
+            ],function(RingChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","在线人数":80,"报警次数":52000},
+                                {"taskName":"任务1","城市":"天津tian","在线人数":76,"报警次数":36000},
+                                {"taskName":"任务1","城市":"郑州asdddddddddasdfaaaaaaaaaahgggggggggggggggggg","在线人数":68,"报警次数":78000},
+                                {"taskName":"任务1","城市":"广州","在线人数":59,"报警次数":69000},
+                                {"taskName":"任务1","城市":"上ddd海","在线人数":93,"报警次数":84000}
+                              ];
+                
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows:["在线人数"],          //要显示的指标
+                        title:"环图",
+                        xName:"城市"				 //x轴显示的名称 
+                    };
+                   
+                    var chart=new RingChart();
+                    chart.setData(data);
+                    chart.setOption(option); 
+                    chart.draw();
+
+
+                    //是否显示label
+                    $("#inputIsShowLabel").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isShowLabel(true);
+                        }else{
+                            chart.isShowLabel(false);
+                        }
+                        chart.draw();
+                    });
+
+                    //是否显示标题
+                    $("#inputIsShowTitle").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.setTitleText(option.title);
+                        }else{
+                            chart.setTitleText("");
+                        }
+                        chart.draw();
+                    });
+
+                    //是否渐变
+                    $("#inputIsGradient").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isGradient(true);
+                        }else{
+                            chart.isGradient(false);
+                        }
+                        chart.draw();
+                    });
+
+                    //标题位置
+                    $("#btnTitleDraw").on("click",function(){
+                        var align=$("[name=titleAlign]:checked").val();
+                        chart.setTitleAlign(align);
+
+                        var verticalAlign=$("[name=titleVerticalAlign]:checked").val();
+                        chart.setTitleVerticalAlign(verticalAlign);
+
+                        var x=$("#titleX").val();
+                        var y=$("#titleY").val();
+                        chart.setTitlePosition(x,y);
+
+                        var color=$("#titleColor").val();
+                        chart.setTitleColor(color);
+
+                        var fontSize=$("#titleFontSize").val();
+                        chart.setTitleFontSize(fontSize);
+
+                        chart.draw();
+                    });
+
+                    //Label
+                    $("#btnRingLabelDraw").on("click",function(){
+
+                        var color=$("#labelColor").val();
+                        chart.setRingLabelColor(color);
+
+                        var fontSize=$("#labelFontSize").val();
+                        chart.setRingLabelFontSize(fontSize);
+
+                        var margin=$("#labelMargin").val();
+                        chart.setRingLabelMargin(margin);
+
+                        chart.draw();
+                    });
+
+                    //环
+                    $("#btnRingDraw").on("click",function(){
+
+                        var ringir=$("#ringir").val();
+                        chart.setRingInderR(ringir);
+
+                        var ringor=$("#ringor").val();
+                        chart.setRingOuterR(ringor);
+
+                        chart.draw();
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+        <fieldset>
+            <legend>显示隐藏</legend>
+            <input id="inputIsShowLabel" type="checkbox" checked="true">显示label</input>
+            <input id="inputIsShowTitle" type="checkbox" checked="true">显示标题</input>
+            <input id="inputIsGradient" type="checkbox">渐变色</input>
+        </fieldset>
+        <fieldset>
+            <legend>标题</legend>
+            <label>水平对齐:</label>
+            <input name="titleAlign" type="radio" value="left">左</input>
+            <input name="titleAlign" type="radio" value="center" checked="true">中</input>
+            <input name="titleAlign" type="radio" value="right">右</input>
+            <br/>
+            <label>垂直对齐:</label>
+            <input name="titleVerticalAlign" type="radio" value="top" checked="true">上</input>
+            <input name="titleVerticalAlign" type="radio" value="middle">中</input>
+            <input name="titleVerticalAlign" type="radio" value="bottom">下</input>
+            <br/>
+            <label>x:</label>
+            <input id="titleX" type="text" value="0"></input>
+            <label>y:</label>
+            <input id="titleY" type="text" value="0"></input>
+            <br/>
+            <label>颜色:</label>
+            <input id="titleColor" type="text" value="#333333"></input>
+            <br/>
+            <label>字体大小:</label>
+            <input id="titleFontSize" type="text" value="18"></input>
+            <br/>
+            <input id="btnTitleDraw" type="button" value="绘制"></input>
+        </fieldset>
+        <fieldset>
+            <legend>Label</legend>
+            <label>颜色:</label>
+            <input id="labelColor" type="text" value="#333333"></input>
+            <br/>
+            <label>字体大小:</label>
+            <input id="labelFontSize" type="text" value="18"></input>
+            <br/>
+            <label>边距:</label>
+            <input id="labelMargin" type="text" value="20"></input>
+            <br/>
+            <input id="btnRingLabelDraw" type="button" value="绘制"></input>
+        </fieldset>
+         <fieldset>
+            <legend>环</legend>
+            <label>内环半径:</label>
+            <input id="ringir" type="text" value="100"></input>
+            <br/>
+            <label>外环半径:</label>
+            <input id="ringor" type="text" value="20"></input>
+            <br/>
+            <input id="btnRingDraw" type="button" value="绘制"></input>
+        </fieldset>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>环图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/ringchart"
+            ],function(RingChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","在线人数":80,"报警次数":52000},
+                                {"taskName":"任务1","城市":"天津tian","在线人数":76,"报警次数":36000},
+                                {"taskName":"任务1","城市":"郑州asddddddddd","在线人数":68,"报警次数":78000},
+                                {"taskName":"任务1","城市":"广州","在线人数":59,"报警次数":69000},
+                                {"taskName":"任务1","城市":"上ddd海","在线人数":93,"报警次数":84000}
+                                // {"taskName":"任务1","城市":"成都","在线人数":93,"报警次数":84000}
+                              ];
+                
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows:["在线人数"],         //要显示的指标
+                        title:"环图", 
+                        xName:"城市"				//x轴显示的名称 
+                    };
+                   
+                    var chart=new RingChart();
+                    chart.setData(data);
+                    chart.setOption(option);    
+                    chart.draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+    </body>
+</html>

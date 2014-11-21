@@ -1,0 +1,49 @@
+﻿<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>极地图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/highcharts/highcharts-more.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/polarchart"
+            ],function(PolarChart){
+              $(function(){
+                  var data=[{"taskName":"任务1","aa":5},
+                            {"taskName":"任务1","bb":8}, 
+                            {"taskName":"任务1","cc":7},
+                            {"taskName":"任务1","dd":6},
+                            {"taskName":"任务1","ee":13},
+                            {"taskName":"任务1","ff":9},
+                            {"taskName":"任务2","aa":25},
+                            {"taskName":"任务2","bb":18}, 
+                            {"taskName":"任务2","cc":20},
+                            {"taskName":"任务2","dd":32},
+                            {"taskName":"任务2","ee":30},
+                            {"taskName":"任务2","ff":41}
+                    
+                  ];
+                  var option={
+                      containerId:"container", //放置HighCharts容器对应的ID
+                      shows:["aa","bb","cc","dd","ee","ff"],         //要显示的指标
+                      title:"极地图",          //标题
+                      yTitle:"时间",         //y轴标题
+                      yUnit:"s" ,             //y轴单位
+                      group:"taskName"
+                  };
+                  
+                  var chart=new PolarChart();
+                  chart.setData(data);
+                  chart.setOption(option);
+                  chart.draw();
+              });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+    </body>
+</html>

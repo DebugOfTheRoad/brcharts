@@ -1,0 +1,193 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>饼图(详细)</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require([
+                "../charts/piechart"
+            ],function(PieChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000},
+                                {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000},
+                                {"taskName":"任务1","城市":"郑州","在线人数":780000,"报警次数":78000},
+                                {"taskName":"任务1","城市":"广州","在线人数":690000,"报警次数":69000},
+                                {"taskName":"任务1","城市":"上海","在线人数":840000,"报警次数":84000}
+                              ];
+                
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows:["在线人数"],         //要显示的指标
+                        title:"饼图",
+                        xName:"城市"				 
+                    };
+                   
+                    var chart=new PieChart();
+                    chart.setData(data);
+                    chart.setOption(option);   
+                    chart.draw();
+
+                    //是否显示图例
+                    $("#inputIsShowLegend").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isShowLegend(true);
+                        }else{
+                            chart.isShowLegend(false);
+                        }
+                        chart.draw();
+                    });
+
+                    //是否显示label
+                    $("#inputIsShowLabel").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isShowLabel(true);
+                        }else{
+                            chart.isShowLabel(false);
+                        }
+                        chart.draw();
+                    });
+
+                    //是否显示标题
+                    $("#inputIsShowTitle").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.setTitleText(option.title);
+                        }else{
+                            chart.setTitleText("");
+                        }
+                        chart.draw();
+                    });
+
+                    //大小
+                    $("#btnDraw").on("click",function(){
+                        chart.setSize($("#pieSize").val());
+                        chart.draw();
+                    });
+
+                    //是否渐变
+                    $("#inputIsGradient").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isGradient(true);
+                        }else{
+                            chart.isGradient(false);
+                        }
+                        chart.draw();
+                    });
+
+                    //图例位置
+                    $("#btnLegendDraw").on("click",function(){
+                        var align=$("[name=legendAlign]:checked").val();
+                        chart.setLengendAlign(align);
+
+                        var verticalAlign=$("[name=legendVerticalAlign]:checked").val();
+                        chart.setLengendVerticalAlign(verticalAlign);
+
+                        var x=$("#legendX").val();
+                        var y=$("#legendY").val();
+                        chart.setLengendPosition(x,y);
+
+                        if($("#ckIsFloating").is(":checked")){
+                            chart.isLengendFloating(true);
+                        }else{
+                            chart.isLengendFloating(false);
+                        }
+
+                        var layout=$("[name=legendLayout]:checked").val();
+                        chart.setLengendLayout(layout);
+
+                        chart.draw();
+                    });
+
+                    //标题位置
+                    $("#btnTitleDraw").on("click",function(){
+                        var align=$("[name=titleAlign]:checked").val();
+                        chart.setTitleAlign(align);
+
+                        var verticalAlign=$("[name=titleVerticalAlign]:checked").val();
+                        chart.setTitleVerticalAlign(verticalAlign);
+
+                        var x=$("#titleX").val();
+                        var y=$("#titleY").val();
+                        chart.setTitlePosition(x,y);
+
+                        var color=$("#titleColor").val();
+                        chart.setTitleColor(color);
+
+                        var fontSize=$("#titleFontSize").val();
+                        chart.setTitleFontSize(fontSize);
+
+                        chart.draw();
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container"></div>
+        <fieldset>
+            <legend>显示隐藏</legend>
+            <input id="inputIsShowLegend" type="checkbox" checked="true">显示图例</input>
+            <input id="inputIsShowLabel" type="checkbox">显示label</input>
+            <input id="inputIsShowTitle" type="checkbox" checked="true">显示标题</input>
+            <input id="inputIsGradient" type="checkbox">渐变色</input>
+        </fieldset>
+        <fieldset>
+            <legend>大小</legend>
+            <input id="pieSize" type="text" value="25"></input>
+            <input id="btnDraw" type="button" value="绘制"></input>
+            <br/>
+            <label>说明:这样设置大小是设置在图中的大小，如果要设置整张图的大小，可以设置div的大小，图是自动缩放的</label>
+        </fieldset>
+        <fieldset>
+            <legend>图例位置</legend>
+            <label>水平对齐:</label>
+            <input name="legendAlign" type="radio" value="left">左</input>
+            <input name="legendAlign" type="radio" value="center" checked="true">中</input>
+            <input name="legendAlign" type="radio" value="right">右</input>
+            <br/>
+            <label>垂直对齐:</label>
+            <input name="legendVerticalAlign" type="radio" value="top">上</input>
+            <input name="legendVerticalAlign" type="radio" value="middle">中</input>
+            <input name="legendVerticalAlign" type="radio" value="bottom" checked="true">下</input>
+            <br/>
+            <label>x:</label>
+            <input id="legendX" type="text" value="80"></input>
+            <label>y:</label>
+            <input id="legendY" type="text" value="10"></input>
+            <br/>
+            <input id="ckIsFloating" type="checkbox">是否浮动</input>
+            <br/>
+            <input name="legendLayout" type="radio" value="horizontal" checked="true">水平排列</input>
+            <input name="legendLayout" type="radio" value="vertical">垂直排列</input>
+            <br/>
+            <input id="btnLegendDraw" type="button" value="绘制"></input>
+        </fieldset>
+        <fieldset>
+            <legend>标题</legend>
+            <label>水平对齐:</label>
+            <input name="titleAlign" type="radio" value="left">左</input>
+            <input name="titleAlign" type="radio" value="center" checked="true">中</input>
+            <input name="titleAlign" type="radio" value="right">右</input>
+            <br/>
+            <label>垂直对齐:</label>
+            <input name="titleVerticalAlign" type="radio" value="top" checked="true">上</input>
+            <input name="titleVerticalAlign" type="radio" value="middle">中</input>
+            <input name="titleVerticalAlign" type="radio" value="bottom">下</input>
+            <br/>
+            <label>x:</label>
+            <input id="titleX" type="text" value="0"></input>
+            <label>y:</label>
+            <input id="titleY" type="text" value="0"></input>
+            <br/>
+            <label>颜色:</label>
+            <input id="titleColor" type="text" value="#333333"></input>
+            <br/>
+            <label>大小:</label>
+            <input id="titleFontSize" type="text" value="18"></input>
+            <br/>
+            <input id="btnTitleDraw" type="button" value="绘制"></input>
+        </fieldset>
+    </body>
+</html>
