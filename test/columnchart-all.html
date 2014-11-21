@@ -1,0 +1,589 @@
+﻿<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>柱状图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require(["../charts/columnchart"],function(ColumnChart){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000,"降雨量":174},
+                                {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000,"降雨量":185},
+                                {"taskName":"任务1","城市":"郑州","在线人数":780000,"报警次数":78000,"降雨量":199},
+                                {"taskName":"任务1","城市":"广州","在线人数":690000,"报警次数":69000,"降雨量":160},
+                                {"taskName":"任务1","城市":"上海","在线人数":840000,"报警次数":84000,"降雨量":155},
+                                {"taskName":"任务2","城市":"北京","在线人数":830000,"报警次数":83000,"降雨量":166},
+                                {"taskName":"任务2","城市":"天津","在线人数":970000,"报警次数":97000,"降雨量":155},
+                                {"taskName":"任务2","城市":"郑州","在线人数":1130000,"报警次数":113000,"降雨量":174},
+                                {"taskName":"任务2","城市":"广州","在线人数":1050000,"报警次数":105000,"降雨量":180},
+                                {"taskName":"任务2","城市":"上海","在线人数":740000,"报警次数":74000,"降雨量":194},
+                                {"taskName":"任务3","城市":"北京","在线人数":660000,"报警次数":66000,"降雨量":120},
+                                {"taskName":"任务3","城市":"天津","在线人数":540000,"报警次数":54000,"降雨量":141},
+                                {"taskName":"任务3","城市":"郑州","在线人数":330000,"报警次数":33000,"降雨量":132},
+                                {"taskName":"任务3","城市":"广州","在线人数":410000,"报警次数":41000,"降雨量":155},
+                                {"taskName":"任务3","城市":"上海","在线人数":570000,"报警次数":57000,"降雨量":184}
+                              ];
+                
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows: ["在线人数","报警次数"],         //要显示的指标
+                        title: "柱状图",             //标题
+                        subtitle: "副标题",          //副标题  
+                        yTitle: "在线人数",          //y轴标题     
+                        xName: "城市",                //x轴显示的名称 
+                        inverted: false,       //是否翻转 
+                        group: "taskName",     //柱状图：分组依据 
+                        stacking: "normal"     //堆栈显示类型：null=禁用，normal=正常，percent=百分比 
+                    };
+                   
+                    var chart=new ColumnChart();
+                    chart.setData(data);
+                    chart.setOption(option);
+                    chart.draw();
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    var shows=["降雨量"],
+                        yTitle="降雨量",
+                        yUnit="ml",
+                        type="line";
+ 
+                 
+                    //是否显示图例
+                    $("#inputIsShowLegend").on("click",function(){
+                       if($(this).is(":checked")){
+                            chart.isShowLegend(true);
+                       }else{
+                            chart.isShowLegend(false);
+                       } 
+                       chart.draw();
+                    });
+
+                    //是否显示标题
+                    $("#inputIsShowTitle").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.setTitleText(option.title);
+                        }else{
+                            chart.setTitleText("");
+                        }
+                        chart.draw();
+                    });
+
+                    //是否显示多Y轴
+                    $("#inputIsShowY").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.addYAxis(shows,yTitle,yUnit,type); 
+                        }else{
+                            chart.setData(data);
+                            chart.setOption(option);
+                            chart.draw();
+                        } 
+                    });
+
+                    //是否显示X轴Label
+                    $("#XLabel").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isShowXLabel(true); 
+                        }else{
+                            chart.isShowXLabel(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //是否显示Y轴Label
+                    $("#YLabel").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isShowYLabel(true); 
+                        }else{
+                            chart.isShowYLabel(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否显示x轴标尺
+                    $("#XCrossHairs").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isShowXCrossHairs(true); 
+                        }else{
+                            chart.isShowXCrossHairs(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否显示y轴标尺
+                    $("#YCrossHairs").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isShowYCrossHairs(true); 
+                        }else{
+                            chart.isShowYCrossHairs(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置数据列是否显示
+                    $("#setSeriesVisible_show").on("click",function(){
+                        var seriesIndex=Number($("#SeriesVisible_seriesIndex").val());   
+                        chart.setSeriesVisible(seriesIndex,false);
+                    });
+                    $("#setSeriesVisible_hide").on("click",function(){
+                        var seriesIndex=Number($("#SeriesVisible_seriesIndex").val());   
+                        chart.setSeriesVisible(seriesIndex,true);
+                    });
+
+                    //隐藏Y轴标题 
+                    $("#XTitle").on("click",function(){
+                        chart.disableYTitle(); 
+                        chart.draw();
+                    });
+
+                    //隐藏X轴刻度 
+                    $("#XTick").on("click",function(){
+                        chart.disableXTick(); 
+                        chart.draw();
+                    });
+
+                    //隐藏Y轴刻度 
+                    $("#YTick").on("click",function(){
+                        chart.disableYTick(); 
+                        chart.draw();
+                    });
+
+                    //移除数据列
+                    $("#removeSeries").on("click",function(){
+                        var seriesIndex=Number($("#remove_seriesIndex").val());   
+                        chart.removeSeries(seriesIndex);
+                    });
+
+                    //设置y轴刻度不等分
+                    $("#setYFunction").on("click",function(){
+                        var YFunction=function(value){
+                            return Math.pow(2,value); 
+                        };
+                        var yInverseFunction=function(value){
+                            return Math.log(value) / Math.LN2;
+                        };
+                        chart.setYFunction(YFunction);
+                        chart.setYInverseFunction(yInverseFunction);
+                        chart.draw();
+                    });
+
+                    //设置是否翻转xy轴
+                    $("#XYInverted").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isInverted(true); 
+                        }else{
+                            chart.isInverted(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否扭转x轴
+                    $("#XReversed").on("click",function(){
+
+                        if($(this).is(":checked")){
+                            chart.isXReversed(true); 
+                        }else{
+                            chart.isXReversed(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否扭转y轴
+                    $("#YReversed").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isYReversed(true); 
+                        }else{
+                            chart.isYReversed(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否在x轴对面显示轴
+                    $("#XOpposite").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isXOpposite(true); 
+                        }else{
+                            chart.isXOpposite(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置是否在y轴对面显示轴
+                    $("#YOpposite").on("click",function(){
+                        if($(this).is(":checked")){
+                            chart.isYOpposite(true); 
+                        }else{
+                            chart.isYOpposite(false);
+                        } 
+                        chart.draw();
+                    });
+
+                    //设置x轴文本旋转角度
+                    $("#setXLabelRotation").on("click",function(){
+                        var degree=Number($("#x_degree").val());   
+                        chart.setXLabelRotation(degree);
+                        chart.draw();
+                    });
+
+                    //设置y轴文本旋转角度
+                    $("#setYLabelRotation").on("click",function(){
+                        var degree=Number($("#y_degree").val());   
+                        chart.setYLabelRotation(degree);
+                        chart.draw();
+                    });
+
+                    //设置y轴刻度间隔
+                    $("#setYTickInterval").on("click",function(){
+                        var interval=Number($("#YTickInterval").val());   
+                        chart.setYTickInterval(interval);
+                        chart.draw();
+                    });
+
+                    //设置x轴起始值
+                    $("#setXStart").on("click",function(){
+                        var start=$("#x_start").val(); 
+                        if(start.match(",")){
+                              var start_arr=start.split(","); 
+                              //将时间类型转化为UTC格式
+                              start=Date.UTC(start_arr[0],start_arr[1]-1,start_arr[2]);
+                          }  
+                        chart.setXStart(start);
+                        chart.draw();
+                    });
+
+                    //设置y轴起始值
+                    $("#setYStart").on("click",function(){
+                        var start=$("#y_start").val();   
+                        chart.setYStart(start);
+                        chart.draw();
+                    });
+
+                    //设置x轴结束值
+                    $("#setXEnd").on("click",function(){
+                        var end=$("#x_end").val(); 
+                        if(end.match(",")){
+                              var end_arr=end.split(","); 
+                              //将时间类型转化为UTC格式
+                              end=Date.UTC(end_arr[0],end_arr[1]-1,end_arr[2]);
+                          }else{
+                              end=Number(end);
+                          }  
+                        chart.setXEnd(end);
+                        chart.draw();
+                    });
+
+                    //设置y轴结束值
+                    $("#setYEnd").on("click",function(){
+                        var end=$("#y_end").val();   
+                        chart.setYEnd(end);
+                        chart.draw();
+                    });
+
+                    //设置x轴标尺宽度
+                    $("#setXCrossHairsWidth").on("click",function(){
+                        var width=$("#x_CrossHairsWidth").val();   
+                        chart.setXCrossHairsWidth(width);
+                        chart.draw();
+                    });
+
+                    //设置y轴标尺宽度
+                    $("#setYCrossHairsWidth").on("click",function(){
+                        var width=$("#y_CrossHairsWidth").val();   
+                        chart.setYCrossHairsWidth(width);
+                        chart.draw();
+                    });
+
+                    //设置x轴标尺颜色
+                    $("#setXCrossHairsColor").on("click",function(){
+                        var color=$("#XCrossHairsColor").val();   
+                        chart.setXCrossHairsColor(color);
+                        chart.draw();
+                    });
+
+                    //设置y轴标尺颜色
+                    $("#setYCrossHairsColor").on("click",function(){
+                        var color=$("#YCrossHairsColor").val();   
+                        chart.setYCrossHairsColor(color);
+                        chart.draw();
+                    });
+
+                    //基线的添加
+                    $("#addLine").on("click",function(){
+                       var select=$("[name=chose]:checked").val();
+                       var value=$("#line_value").val();
+                       var text=$("#line_text").val();
+                       var color=$("#line_color").val();
+                       if(select==1){
+                          if(value.match(",")){
+                              var varue_arr=value.split(","); 
+                              //将时间类型转化为UTC格式
+                              value=Date.UTC(varue_arr[0],varue_arr[1]-1,varue_arr[2]);
+                          }
+                          chart.addXLine(value,text,color);
+                       }else{
+                          chart.addYLine(value,text,color); 
+                       }
+                      chart.draw();
+                    });
+
+                    //区域的添加
+                    $("#addBand").on("click",function(){
+                       var select=$("[name=chose]:checked").val();
+                       var from=$("#band_from").val();
+                       var to=$("#band_to").val();
+                       var color=$("#band_color").val();
+                       if(select==1){
+                          if(from.match(",")){
+                              var from_arr=from.split(","); 
+                              var to_arr=to.split(",");
+                              //将时间类型转化为UTC格式
+                              from=Date.UTC(from_arr[0],from_arr[1]-1,from_arr[2]);
+                              to=Date.UTC(to_arr[0],to_arr[1]-1,to_arr[2]);
+                          }
+                          chart.addXBand(from,to,color);
+                       }else{
+                          chart.addYBand(from,to,color); 
+                       }
+                      chart.draw();
+                    });
+
+                    //添加点
+                    $("#addPoint").on("click",function(){
+                        var seriesIndex=Number($("#point_seriesIndex").val()); 
+                        var x=$("#point_x").val(); 
+                        if(x.match(",")){
+                              var x_arr=x.split(","); 
+                              //将时间类型转化为UTC格式
+                              x=Date.UTC(x_arr[0],x_arr[1]-1,x_arr[2]);
+                          } 
+                        var y=Number($("#point_y").val());   
+                        chart.addPoint(seriesIndex,x,y);
+                        chart.draw();
+                    });
+
+                    //更新点
+                    $("#updatePoint").on("click",function(){
+                        var seriesIndex=Number($("#update_seriesIndex").val()); 
+                        var pointIndex=Number($("#update_pointIndex").val());
+
+                        var x=$("#point_x").val(); 
+                        if(x.match(",")){
+                              var x_arr=x.split(","); 
+                              //将时间类型转化为UTC格式
+                              x=Date.UTC(x_arr[0],x_arr[1]-1,x_arr[2]);
+                          } 
+
+                        var color=$("#update_color").val();   
+                        var type=$("#update_type").val();   
+                        chart.updatePoint(seriesIndex,pointIndex,color,type);
+                        chart.draw();
+                    });
+
+                    //图例位置
+                    $("#btnLegendDraw").on("click",function(){
+                        var align=$("[name=legendAlign]:checked").val();
+                        chart.setLengendAlign(align);
+
+                        var verticalAlign=$("[name=legendVerticalAlign]:checked").val();
+                        chart.setLengendVerticalAlign(verticalAlign);
+
+                        var x=$("#legendX").val();
+                        var y=$("#legendY").val();
+                        chart.setLengendPosition(x,y);
+
+                        if($("#ckIsFloating").is(":checked")){
+                            chart.isLengendFloating(true);
+                        }else{
+                            chart.isLengendFloating(false);
+                        }
+
+                        var layout=$("[name=legendLayout]:checked").val();
+                        chart.setLengendLayout(layout);
+
+                        chart.draw();
+                    });
+
+                    //标题位置
+                    $("#btnTitleDraw").on("click",function(){
+                        var align=$("[name=titleAlign]:checked").val();
+                        chart.setTitleAlign(align);
+
+                        var verticalAlign=$("[name=titleVerticalAlign]:checked").val();
+                        chart.setTitleVerticalAlign(verticalAlign);
+
+                        var x=$("#titleX").val();
+                        var y=$("#titleY").val();
+                        chart.setTitlePosition(x,y);
+
+                        var color=$("#titleColor").val();
+                        chart.setTitleColor(color);
+
+                        var fontSize=$("#titleFontSize").val();
+                        chart.setTitleFontSize(fontSize);
+
+                        chart.draw();
+                    });
+
+
+
+
+                });
+            });
+        </script>
+    </head>
+     <body>
+        <div id="container"></div>
+        <fieldset>
+           <legend>显示隐藏</legend>
+           <input id="inputIsShowLegend" type="checkbox" checked="true">显示图例</input>
+           <input id="inputIsShowTitle" type="checkbox" checked="true">显示标题</input>
+           <input id="inputIsShowY" type="checkbox">显示多Y轴</input>
+           <br/>
+           <input id="XLabel" type="checkbox" checked="true">X轴label</input>
+           <input id="YLabel" type="checkbox" checked="true">Y轴label</input>
+           <input id="XCrossHairs" type="checkbox">X轴标尺</input>
+           <input id="YCrossHairs" type="checkbox">Y轴标尺</input>
+           <br>
+           数据列：<input id="SeriesVisible_seriesIndex" type="text" value="1"></input>
+           <button id="setSeriesVisible_show">显示</button>
+           <button id="setSeriesVisible_hide">隐藏</button>
+        </fieldset>
+        <fieldset>
+          <legend>隐藏</legend>
+          <button id="XTitle">Y轴标题</button>
+          <button id="XTick">X轴刻度</button>
+          <button id="YTick">Y轴刻度</button>
+          <br>
+          数据列：<input id="remove_seriesIndex" type="text" value="1"></input>
+          <button id="removeSeries">移除</button>
+        </fieldset>
+        <fieldset>
+          <legend>Y轴刻度不等分</legend>
+           <button id="setYFunction">2的指数形式</button>
+        </fieldset>
+        <fieldset>
+           <legend>变形</legend>
+           <input id="XYInverted" type="checkbox">翻转xy轴</input>
+           <input id="XReversed" type="checkbox">扭转x轴</input>
+           <input id="YReversed" type="checkbox">扭转y轴</input>
+           <input id="XOpposite" type="checkbox">x轴置换</input>
+           <input id="YOpposite" type="checkbox">y轴置换</input>
+           <br>
+           X轴Label：<input id="x_degree" type="text" value="45"></input>
+           <button id="setXLabelRotation">旋转</button>
+           Y轴Label：<input id="y_degree" type="text" value="45"></input>
+           <button id="setYLabelRotation">旋转</button>
+           <br>
+           Y轴刻度间距：<input id="YTickInterval" type="text" value="1"></input>
+           <button id="setYTickInterval">确定</button>
+           <br>
+           X轴起始值：<input id="x_start" type="text" value="2014,4,10"></input>
+           <button id="setXStart">确定</button>
+           Y轴起始值：<input id="y_start" type="text" value="0"></input>
+           <button id="setYStart">确定</button>
+           <br>
+           X轴结束值：<input id="x_end" type="text" value="2015,7,26"></input>
+           <button id="setXEnd">确定</button>
+           Y轴结束值：<input id="y_end" type="text" value="60"></input>
+           <button id="setYEnd">确定</button>
+           <br>
+           X轴标尺宽度：<input id="x_CrossHairsWidth" type="text" value="3"></input>
+           <button id="setXCrossHairsWidth">确定</button>
+           Y轴标尺宽度：<input id="y_CrossHairsWidth" type="text" value="3"></input>
+           <button id="setYCrossHairsWidth">确定</button>
+           <br>
+           X轴标尺颜色：<input id="XCrossHairsColor" type="text" value="red"></input>
+           <button id="setXCrossHairsColor">确定</button>
+           Y轴标尺颜色：<input id="YCrossHairsColor" type="text" value="blue"></input>
+           <button id="setYCrossHairsColor">确定</button>  
+        </fieldset>
+        <fieldset>
+           <legend>X轴、Y轴基线及区域的添加</legend>
+           类别：
+           <input type="radio" name="chose" value="1" checked="true">X轴
+           <input type="radio" name="chose" value="2">Y轴
+           <br/>
+           《基线》
+            <br>
+           位置：<input id="line_value" type="text" value="2014,4,10"></input>
+           文本：<input id="line_text" type="text" value="基线"></input>
+           颜色：<input id="line_color" type="text" value="red"></input>
+           <button id="addLine">确定</button>
+           <br/>
+           《区域》
+           <br>
+           开始：<input id="band_from" type="text" value="2014,4,10"></input>
+           结束：<input id="band_to" type="text" value="2015,1,26"></input>
+           颜色：<input id="band_color" type="text" value="yellow"></input>
+           <button id="addBand">确定</button>
+           <br/>
+           <label>时间类型年月日以“,”隔开，例如：2014,4,10;数值类型为Number</label>
+        </fieldset>
+        <fieldset>
+          <legend>特殊点</legend>
+          《添加点》
+          <br>
+           系列位置：<input id="point_seriesIndex" type="text" value="0"></input>
+           x：<input id="point_x" type="text" value="2016,1,1"></input>
+           y：<input id="point_y" type="text" value="40"></input>
+           <button id="addPoint">添加</button>
+        </fieldset>
+        <fieldset>
+            <legend>图例位置</legend>
+            <label>水平对齐:</label>
+            <input name="legendAlign" type="radio" value="left">左</input>
+            <input name="legendAlign" type="radio" value="center" checked="true">中</input>
+            <input name="legendAlign" type="radio" value="right">右</input>
+            <br/>
+            <label>垂直对齐:</label>
+            <input name="legendVerticalAlign" type="radio" value="top">上</input>
+            <input name="legendVerticalAlign" type="radio" value="middle">中</input>
+            <input name="legendVerticalAlign" type="radio" value="bottom" checked="true">下</input>
+            <br/>
+            <label>x:</label>
+            <input id="legendX" type="text" value="80"></input>
+            <label>y:</label>
+            <input id="legendY" type="text" value="10"></input>
+            <br/>
+            <input id="ckIsFloating" type="checkbox">是否浮动</input>
+            <br/>
+            <input name="legendLayout" type="radio" value="horizontal" checked="true">水平排列</input>
+            <input name="legendLayout" type="radio" value="vertical">垂直排列</input>
+            <br/>
+            <input id="btnLegendDraw" type="button" value="绘制"></input>
+        </fieldset>
+        <fieldset>
+            <legend>标题</legend>
+            <label>水平对齐:</label>
+            <input name="titleAlign" type="radio" value="left">左</input>
+            <input name="titleAlign" type="radio" value="center" checked="true">中</input>
+            <input name="titleAlign" type="radio" value="right">右</input>
+            <br/>
+            <label>垂直对齐:</label>
+            <input name="titleVerticalAlign" type="radio" value="top" checked="true">上</input>
+            <input name="titleVerticalAlign" type="radio" value="middle">中</input>
+            <input name="titleVerticalAlign" type="radio" value="bottom">下</input>
+            <br/>
+            <label>x:</label>
+            <input id="titleX" type="text" value="0"></input>
+            <label>y:</label>
+            <input id="titleY" type="text" value="0"></input>
+            <br/>
+            <label>颜色:</label>
+            <input id="titleColor" type="text" value="#333333"></input>
+            <br/>
+            <label>大小:</label>
+            <input id="titleFontSize" type="text" value="18"></input>
+            <br/>
+            <input id="btnTitleDraw" type="button" value="绘制"></input>
+        </fieldset>
+        
+    </body>
+</html>
