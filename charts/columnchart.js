@@ -77,7 +77,6 @@ define([
 	    		}
 
 	            utils.merge(true,chart.option,option);
-	    		//alert(JSON.stringify(chart.option.xAxis.categories));
 	    	},
 
 	    	//让数据显示在柱状图中

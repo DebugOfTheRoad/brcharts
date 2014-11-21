@@ -91,40 +91,6 @@ define([
 
 	            utils.merge(true,chart.option,option);
 	    	},
-
-            //重写mergeYAxisOption    -------------Y轴不等分
-	    	mergeYAxisOption:function(){
-	    		var chart=this,
-	    			option={};
-
-
-	    		option.yAxis={
-	    			//type: 'logarithmic'
-                  //  minorTickInterval: 'auto'
-	    			//type: 'logarithmic'    //logarithmic,category,linear
- 
-	               // tickPositions:[0,1,10,30,90] 
-	               //tickInterval:1,      //刻度间距
-	              // categories:[0,10,20,40,80,160]
-	               // tickPixelInterval:300
-	               //categories:[0,10,100]
-                   /* 
-	               labels:{
-	               	formatter: function () {
-                        return Math.pow(10,this.value/10);
-                    }
-	               }
-	               */
-	    		}
-
-	            utils.merge(true,chart.option,option);	
-	    	},
-
-
-
-
-
-
 	    	
 	    	//重写mergeTooltipOption    --------提示框设置 
 	    	mergeTooltipOption:function(){

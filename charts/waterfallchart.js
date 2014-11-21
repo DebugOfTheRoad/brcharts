@@ -13,16 +13,6 @@ define([
             $('#'+containerId).css("height",dataLen*30+150);//数字是单个条的所占高度
         },
 
-        //设置颜色集合
-        setColor:function(){
-             var chart=this, 
-                option={};
-
-            option.colors=['#D60047', '#FFCC33', '#999933', '#33FF66', '#FFFF00', '#009900', '#eeeeee'];
-
-            utils.merge(true,chart.option,option);
-        },
-
     	//重写mergeChartOption
     	mergeChartOption:function(){
     		var chart=this,
@@ -37,7 +27,6 @@ define([
             utils.merge(true,chart.option,option);
 
             chart.setChartHeight();
-            chart.setColor();
     	},
 
     	//重写mergeSeriesOption
@@ -61,14 +50,6 @@ define([
       				oneData.y=data[j][oneSeries.name];
       				oneSeries.data.push(oneData);
                 };
-
-                // oneSeries.dataLabels={
-                //     enabled: true,
-                //     style: {
-                //         color: '#FFFFFF',
-                //         textShadow: '0px 0px 2px black'
-                //     }
-                // };
 
                 series.push(oneSeries);
             };

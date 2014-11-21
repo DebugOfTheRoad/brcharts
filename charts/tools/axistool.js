@@ -235,7 +235,7 @@ define(["../utils/utils"],function(utils){
       //设置x轴文本旋转角度
         setXLabelRotation:function(degree){
             var chart=this,
-            option={};
+            option={};    
             
             option.xAxis={
                     labels: {
@@ -249,7 +249,7 @@ define(["../utils/utils"],function(utils){
         //设置y轴文本旋转角度
         setYLabelRotation:function(degree){
             var chart=this,
-            option={};
+            option={};  
             
             option.yAxis={
                     labels: {
@@ -325,33 +325,22 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){
-                if(crosshairs[0]==null){     //X轴未初始化
-                    option.tooltip={
-                            crosshairs: [{
-                                width: isShow==true?1:-1,
-                                color: 'gray'
-                            },crosshairs[1]]       
-                    };
-                }else{                       //X轴已初始化
-                    option.tooltip={
-                            crosshairs: [{
-                                width: isShow==true?crosshairs[0].width:-1,
-                                color: crosshairs[0].color
-                            },crosshairs[1]]       
-                    };
+
+            option.tooltip={
+                crosshairs: [{
+                    width:1
+                },crosshairs&&crosshairs[1]?crosshairs[1]:null]       
+            };
+
+            if(crosshairs&&crosshairs[0]){
+                if(isShow){
+                    crosshairs[0].width=crosshairs[0].width>0?crosshairs[0].width:1;
+                }else{
+                    crosshairs[0]=null;
                 }
-            }else{
-                option.tooltip={
-                        crosshairs: [{
-                            width: isShow==true?1:-1,
-                            color: 'gray'
-                        },null]       
-                };
+                option.tooltip.crosshairs[0]=crosshairs[0];
             }
-            
-             utils.merge(true,chart.option,option); 
+            utils.merge(true,chart.option,option); 
         },
         
         //设置是否显示y轴标尺
@@ -359,33 +348,23 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){
-                if(crosshairs[1]==null){     //Y轴未初始化
-                    option.tooltip={
-                            crosshairs: [crosshairs[0],{
-                                width: isShow==true?1:-1,
-                                color: 'gray'
-                            }]       
-                    };
-                }else{                      //Y轴已初始化
-                    option.tooltip={
-                            crosshairs: [crosshairs[0],{
-                                width: isShow==true?crosshairs[1].width:-1,
-                                color: crosshairs[1].color
-                            }]       
-                    };
-                }   
-            }else{
-                option.tooltip={
-                        crosshairs: [null,{
-                            width: isShow==true?1:-1,
-                            color: 'gray'
-                        }]       
-                };
+
+            option.tooltip={
+                crosshairs: [crosshairs&&crosshairs[0]?crosshairs[0]:null,{
+                    width:1
+                }]       
+            };
+
+            if(crosshairs&&crosshairs[1]){
+                if(isShow){
+                    crosshairs[1].width=crosshairs[1].width>0?crosshairs[1].width:1;
+                }else{
+                    crosshairs[1]=null;
+                }
+                option.tooltip.crosshairs[1]=crosshairs[1];
             }
-            
-             utils.merge(true,chart.option,option); 
+
+            utils.merge(true,chart.option,option); 
         },
         
         //设置x轴标尺宽度
@@ -393,24 +372,19 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){       
-                option.tooltip={
-                        crosshairs: [{
-                            width: width,
-                            color: crosshairs[0]==null?'gray':crosshairs[0].color
-                        },crosshairs[1]]       
-                };              
-            }else{
-                option.tooltip={
-                        crosshairs: [{
-                            width: width,
-                            color: 'gray'
-                        },null]       
-                };
+
+            option.tooltip={
+                crosshairs: [{
+                    width:width
+                },crosshairs&&crosshairs[1]?crosshairs[1]:null]       
+            };
+
+            if(crosshairs&&crosshairs[0]){
+                crosshairs[0].width=width;
+                option.tooltip.crosshairs[0]=crosshairs[0];
             }
-            
-             utils.merge(true,chart.option,option); 
+
+            utils.merge(true,chart.option,option);
         },
         
         //设置y轴标尺宽度
@@ -418,24 +392,19 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){       
-                option.tooltip={
-                        crosshairs: [crosshairs[0],{
-                            width: width,
-                            color: crosshairs[1]==null?'gray':crosshairs[1].color
-                        }]       
-                };              
-            }else{
-                option.tooltip={
-                        crosshairs: [null,{
-                            width: width,
-                            color: 'gray'
-                        }]       
-                };
+
+            option.tooltip={
+                crosshairs: [crosshairs&&crosshairs[0]?crosshairs[0]:null,{
+                    width:width
+                }]       
+            };
+
+            if(crosshairs&&crosshairs[1]){
+                crosshairs[1].width=width;
+                option.tooltip.crosshairs[1]=crosshairs[1];
             }
-            
-             utils.merge(true,chart.option,option); 
+
+            utils.merge(true,chart.option,option); 
         },
         
         //设置x轴标尺颜色
@@ -443,24 +412,19 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){       
-                option.tooltip={
-                        crosshairs: [{
-                            width: crosshairs[0]==null?1:crosshairs[0].width ,
-                            color: color
-                        },crosshairs[1]]       
-                };              
-            }else{
-                option.tooltip={
-                        crosshairs: [{
-                            width: 1,
-                            color: color
-                        },null]       
-                };
+
+            option.tooltip={
+                crosshairs: [{
+                    color:color
+                },crosshairs&&crosshairs[1]?crosshairs[1]:null]       
+            };
+
+            if(crosshairs&&crosshairs[0]){
+                crosshairs[0].color=color;
+                option.tooltip.crosshairs[0]=crosshairs[0];
             }
-            
-             utils.merge(true,chart.option,option); 
+
+            utils.merge(true,chart.option,option); 
         },
         
         //设置y轴标尺颜色
@@ -468,24 +432,19 @@ define(["../utils/utils"],function(utils){
             var chart=this,
             option={},
             crosshairs=chart.option.tooltip.crosshairs;
-            
-            if(crosshairs!=null){       
-                option.tooltip={
-                        crosshairs: [crosshairs[0],{
-                            width: crosshairs[1]==null?1:crosshairs[1].width ,
-                            color: color
-                        }]       
-                };              
-            }else{
-                option.tooltip={
-                        crosshairs: [null,{
-                            width: 1,
-                            color: color
-                        }]       
-                };
+
+            option.tooltip={
+                crosshairs: [crosshairs&&crosshairs[0]?crosshairs[0]:null,{
+                    color:color
+                }]       
+            };
+
+            if(crosshairs&&crosshairs[1]){
+                crosshairs[1].color=color;
+                option.tooltip.crosshairs[1]=crosshairs[1];
             }
-            
-             utils.merge(true,chart.option,option); 
+
+            utils.merge(true,chart.option,option);
         },
 
         //设置y值计算函数
@@ -510,6 +469,62 @@ define(["../utils/utils"],function(utils){
             }
 
             utils.merge(true,chart.option,option); 
+        },
+
+        //设置多Y轴显示   ////////////////////////////////////////////////
+        addYAxis:function(shows,yTitle,yUnit,type){  
+            var chart=this, 
+            highchart=chart.highchart,
+            userOption=chart.userOption,
+            xName=userOption.xName,
+            groupMap=chart.groupMap,
+            groupKeys=groupMap.keys(),        //要显示的指标;
+            chart_type=chart.option.chart.type;  
+
+            if(chart_type!="spline"&&chart_type!="scatter"&&chart_type!="column"){
+               throw "多Y轴添加只支持spline，scatter，column";
+            }
+
+            var yAxis={
+                id: yTitle,
+                title: {
+                   text: yTitle+"("+yUnit+")"
+                },
+                lineWidth: 1,
+                tickLength: 10,
+                tickWidth: 1,
+                opposite: true
+            };
+            highchart.addAxis(yAxis);    //添加Y轴 
+
+            for (var i = 0; i < groupKeys.length; i++) {  
+                    for (var j = 0; j < shows.length ; j++) {  
+                        var oneSeries={};
+                            oneSeries.name=groupKeys[i]+"("+shows[j]+")";
+                            if(type){
+                                oneSeries.type=type;
+                            }else{
+                                oneSeries.type=chart.option.chart.type;
+                            }
+                            oneSeries.yAxis=yTitle;
+                           // oneSeries.color="red";
+                            oneSeries.data=new Array();
+                        var data=groupMap.get(groupKeys[i]);
+                        for (var k = 0; k < data.length; k++) {
+                            if(data[k].hasOwnProperty(shows[j])){
+                                var oneData={};
+                                var datetime=data[k][xName]; 
+                                if(datetime.match("-")!=null){
+                                    var datetimeToUTC=chart.datetimeChangeToUTC(datetime);   //datetime转化为UTC格式
+                                    oneData.x=datetimeToUTC;
+                                }
+                                oneData.y=data[k][shows[j]];
+                                oneSeries.data.push(oneData);
+                            }
+                        }
+                        highchart.addSeries(oneSeries);    //添加数据列 
+                    }   
+                }   
         }
        
 	}

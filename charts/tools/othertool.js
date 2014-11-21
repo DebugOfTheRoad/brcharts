@@ -51,6 +51,33 @@ define(["../utils/utils"],function(utils){
                 colors:colors
             };
             utils.merge(true,chart.option,option);
+        },
+
+        //设置语言
+        setLang:function(lang){
+            var langOption;
+
+            var en={
+
+            }
+
+            var zh_cn={
+                loading:"加载中...",
+                months:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+                noData:"无数据",
+                resetZoom:"重置",
+                resetZoomTitle:"缩放",
+                shortMonths:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+                weekdays:["周一","周二","周三","周四","周五","周六","周日"]
+            }
+
+            switch(lang){
+                case "en":langOption=en;break;
+                case "zh-cn":langOption=zh_cn;break;
+            }
+
+            Highcharts.setOptions({lang:langOption})
+
         }
 	}
 	return OtherTool;
