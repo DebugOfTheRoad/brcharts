@@ -99,7 +99,22 @@ var UNDEFINED,
 
 	// lookup over the types and the associated classes
 	seriesTypes = {},
-	Highcharts;
+	Highcharts,
+	isFixedTooltip=false;
+
+	// tooltip fixed
+	$(doc).on("keydown",function(event){
+		var keyCode=event.keyCode;
+		if(keyCode==17){
+			isFixedTooltip=true;
+		} 
+	});
+	$(doc).on("keyup",function(event){
+		var keyCode=event.keyCode;
+		if(keyCode==17){
+			isFixedTooltip=false;
+		} 
+	});
 
 // The Highcharts namespace
 if (win.Highcharts) {
@@ -8563,6 +8578,9 @@ Tooltip.prototype = {
 	 * @private
 	 */
 	move: function (x, y, anchorX, anchorY) {
+		if(isFixedTooltip){
+			return;
+		}
 		var tooltip = this,
 			now = tooltip.now,
 			animate = tooltip.options.animation !== false && !tooltip.isHidden && 
@@ -8603,6 +8621,8 @@ Tooltip.prototype = {
 	 * Hide the tooltip
 	 */
 	hide: function () {
+		if(isFixedTooltip)
+			return;
 		var tooltip = this,
 			hoverPoints;
 		
@@ -8798,6 +8818,8 @@ Tooltip.prototype = {
 	 * @param {Object} point
 	 */
 	refresh: function (point, mouseEvent) {
+		if(isFixedTooltip)
+			return;
 		var tooltip = this,
 			chart = tooltip.chart,
 			label = tooltip.label,
