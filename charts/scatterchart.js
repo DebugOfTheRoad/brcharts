@@ -87,10 +87,11 @@ define([
 	    		option.xAxis={
     				gridLineWidth: 1,
 	                type: 'datetime',
-	                dateTimeLabelFormats: {
-	    			    month: '%e. %b',
-	                    year: '%b'
-	                }
+	                labels: {
+		                formatter: function () {
+		                    return Highcharts.dateFormat('%m-%d %H:%M', this.value);
+		                }
+		            }
 	    		};
 
 	            utils.merge(true,chart.option,option);
@@ -99,11 +100,12 @@ define([
 	    	//重写mergeTooltipOption    --------提示框设置 
 	    	mergeTooltipOption:function(){
 	    		var chart=this,
+	    			yUnit=chart.userOption.yUnit||"",
     			    option={};
 	    		    option.tooltip={
-                         formatter: function () {
-	    		    	       var str='<b>' + Highcharts.dateFormat('%Y-%m-%d', this.x) + '</b><br/>'+Highcharts.dateFormat('%H:%M:%S', this.x);
-	    		    	       str+= '<br/><b>' + utils.getDisplayName(this.series.name) + ':</b> ' + this.y;
+                        formatter: function () {
+	    		    	       var str='<e>' + Highcharts.dateFormat('%m-%d %H:%M', this.x) + '<br/>'
+	    		    	       + utils.getDisplayName(this.series.name) + ':' + this.y+yUnit;
 	                      return str;
                          }
 	    		    };  
