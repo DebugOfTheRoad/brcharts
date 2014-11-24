@@ -168,8 +168,8 @@ define([
                         return this.name;
                     else
                         return utils.getDisplayName(this.name);
-                };
-            }
+                }
+            };
 
             utils.merge(true,chart.option,option);
         },
