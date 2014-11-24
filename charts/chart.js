@@ -110,7 +110,7 @@ define([
 
             option.xAxis={
                 tickLength:0
-            }
+            };
 
             chart.mergeXAXisOption();
          },
@@ -126,7 +126,7 @@ define([
                     text:userOption.yUnit?userOption.yTitle+"("+userOption.yUnit+")":userOption.yTitle
                  },
                  tickLength:0
-            }
+            };
             chart.mergeYAxisOption();
          },
 
@@ -141,7 +141,7 @@ define([
                 labelFormatter:function(){
                     return utils.getDisplayName(this.name);
                 }
-            }
+            };
 
             chart.mergeLegendOption();
          },

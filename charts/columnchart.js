@@ -49,7 +49,7 @@ define([
 	                	var oneSeries={};
 	                        oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
 	                        oneSeries.stack=groupKeys[i];             //堆栈显示依据
-	                        oneSeries.data=new Array();
+	                        oneSeries.data=[];
 	                    var data=groupMap.get(groupKeys[i]);
 	                	for (var k = 0; k < data.length; k++) {
 	                		if(data[k].hasOwnProperty(shows[j])){
@@ -74,7 +74,7 @@ define([
 	    		option.xAxis={
 	    			categories: categoriesArr,
 	                gridLineWidth: 1
-	    		}
+	    		};
 
 	            utils.merge(true,chart.option,option);
 	    	},

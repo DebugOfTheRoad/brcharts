@@ -1,4 +1,4 @@
-define(["./map"],function(Map){
+define(["./map","./field"],function(Map,fieldMap){
     var utils=function(){
     };
 
@@ -40,8 +40,7 @@ define(["./map"],function(Map){
                         value = original[key];
 
                         // Copy the contents of objects, but not arrays or DOM nodes
-                        if (value && typeof value === 'object' && Object.prototype.toString.call(value) !== '[object Array]'
-                                    && typeof value.nodeType !== 'number') {
+                        if (value && typeof value === 'object' && Object.prototype.toString.call(value) !== '[object Array]'&& typeof value.nodeType !== 'number') {
                             copy[key] = doCopy(copy[key] || {}, value);
 
                             // Primitives and arrays are copied over directly
@@ -85,16 +84,11 @@ define(["./map"],function(Map){
      *@param {String} field
      */
     utils.getDisplayName=function(field){
-        var name,
-            map;
+        var name;
 
-        map=new Map();
+        name=fieldMap.get(field);
 
-        //@todo init the map
-
-        name=map.get(field);
-
-        return name?name:field+"()";
+        return name?name:field;
     };
 
     /**
@@ -107,13 +101,12 @@ define(["./map"],function(Map){
                 map.get(arr[i][keyField]).push(arr[i]);
             }
             else{
-                map.put(arr[i][keyField],new Array());
+                map.put(arr[i][keyField],[]);
                 map.get(arr[i][keyField]).push(arr[i]);
             }
             
-        };
+        }
         return map;
-     }
-
+     };
     return utils;
 });

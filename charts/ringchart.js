@@ -29,7 +29,7 @@ define([
 
 	    		var oneSeries={};
 	    		oneSeries.name=show;
-		        oneSeries.data=new Array();
+		        oneSeries.data=[];
 		        
                 for(var k = 0; k < data.length ; k++){  
             		var oneData={};

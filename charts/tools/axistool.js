@@ -454,7 +454,7 @@ define(["../utils/utils"],function(utils){
 
             option.yAxis={
                 yFunction:fun
-            }
+            };
 
             utils.merge(true,chart.option,option); 
         },
@@ -466,7 +466,7 @@ define(["../utils/utils"],function(utils){
 
             option.yAxis={
                 yInverseFunction:fun
-            }
+            };
 
             utils.merge(true,chart.option,option); 
         },
@@ -498,35 +498,34 @@ define(["../utils/utils"],function(utils){
             highchart.addAxis(yAxis);    //添加Y轴 
 
             for (var i = 0; i < groupKeys.length; i++) {  
-                    for (var j = 0; j < shows.length ; j++) {  
-                        var oneSeries={};
-                            oneSeries.name=groupKeys[i]+"("+shows[j]+")";
-                            if(type){
-                                oneSeries.type=type;
-                            }else{
-                                oneSeries.type=chart.option.chart.type;
-                            }
-                            oneSeries.yAxis=yTitle;
-                           // oneSeries.color="red";
-                            oneSeries.data=new Array();
-                        var data=groupMap.get(groupKeys[i]);
-                        for (var k = 0; k < data.length; k++) {
-                            if(data[k].hasOwnProperty(shows[j])){
-                                var oneData={};
-                                var datetime=data[k][xName]; 
-                                if(datetime.match("-")!=null){
-                                    var datetimeToUTC=chart.datetimeChangeToUTC(datetime);   //datetime转化为UTC格式
-                                    oneData.x=datetimeToUTC;
-                                }
-                                oneData.y=data[k][shows[j]];
-                                oneSeries.data.push(oneData);
-                            }
+                for (var j = 0; j < shows.length ; j++) {  
+                    var oneSeries={};
+                        oneSeries.name=groupKeys[i]+"("+shows[j]+")";
+                        if(type){
+                            oneSeries.type=type;
+                        }else{
+                            oneSeries.type=chart.option.chart.type;
                         }
-                        highchart.addSeries(oneSeries);    //添加数据列 
-                    }   
+                        oneSeries.yAxis=yTitle;
+                        oneSeries.data=[];
+                    var data=groupMap.get(groupKeys[i]);
+                    for (var k = 0; k < data.length; k++) {
+                        if(data[k].hasOwnProperty(shows[j])){
+                            var oneData={};
+                            var datetime=data[k][xName]; 
+                            if(datetime.match("-")!==null){
+                                var datetimeToUTC=chart.datetimeChangeToUTC(datetime);   //datetime转化为UTC格式
+                                oneData.x=datetimeToUTC;
+                            }
+                            oneData.y=data[k][shows[j]];
+                            oneSeries.data.push(oneData);
+                        }
+                    }
+                    highchart.addSeries(oneSeries);    //添加数据列 
                 }   
+            }   
         }
        
-	}
+	};
 	return AxisTool;
 });

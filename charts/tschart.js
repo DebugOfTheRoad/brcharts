@@ -78,7 +78,7 @@ define([
                     for (var i = shows.length-1; i >= 0; i--) {
                         var oneSeries={};
                         oneSeries.name=dimensionKeys[k];
-                        oneSeries.data=new Array();
+                        oneSeries.data=[];
                         for (var j = 0; j < data.length; j++) {
                             var oneData={};
                             if(dimensionKeys[k]==data[j][dimensionField]){
@@ -89,15 +89,15 @@ define([
                                 oneData._showField=shows[i];
                             }
                             oneSeries.data.push(oneData);
-                        };
+                        }
                         series.push(oneSeries);
-                    };
-                };
+                    }
+                }
             }else{
                 for (var i = shows.length-1; i >= 0; i--) {
                     var oneSeries={};
                     oneSeries.name=shows[i];
-                    oneSeries.data=new Array();
+                    oneSeries.data=[];
                     for (var j = 0; j < data.length; j++) {
                         var oneData={};
                         utils.extend(oneData,data[j]);  //将所有属性赋予给数据
@@ -105,10 +105,10 @@ define([
                         oneData.start=data[j][startName];
                         oneData.y=data[j][oneSeries.name];
                         oneSeries.data.push(oneData);
-                    };
+                    }
 
                     series.push(oneSeries);
-                };
+                }
             }
             
             utils.merge(true,chart.option,option);
@@ -127,13 +127,13 @@ define([
 
             for (var i = 0; i < groupKeys.length; i++) {
                 xNames.push(groupMap.get(groupKeys[i])[0][xName]);
-            };
+            }
 
 
     		option.xAxis={
     			categories: xNames,
                 gridLineWidth: 1
-    		}
+    		};
 
             utils.merge(true,chart.option,option);
     	},
@@ -168,7 +168,7 @@ define([
                         return this.name;
                     else
                         return utils.getDisplayName(this.name);
-                }
+                };
             }
 
             utils.merge(true,chart.option,option);
@@ -189,7 +189,7 @@ define([
                     else
                         return '<b>' + this.point[xName] + '</b><br/>' + utils.getDisplayName(this.series.name) + ":" + this.y +yUnit ;
                 } 
-            }
+            };
             utils.merge(true,chart.option,option);
         }
     };

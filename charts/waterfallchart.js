@@ -42,17 +42,17 @@ define([
             for (var i = shows.length-1; i >= 0; i--) {
                 var oneSeries={};
                 oneSeries.name=shows[i];
-                oneSeries.data=new Array();
+                oneSeries.data=[];
                 for (var j = 0; j < data.length; j++) {
               		var oneData={};
                     utils.extend(oneData,data[i]);  //将所有属性赋予给数据
       				oneData.start=data[j][startName];
       				oneData.y=data[j][oneSeries.name];
       				oneSeries.data.push(oneData);
-                };
+                }
 
                 series.push(oneSeries);
-            };
+            }
 
             utils.merge(true,chart.option,option);
     	},
@@ -64,7 +64,7 @@ define([
     			xName=chart.userOption.xName,
     			data=chart.userData;
 
-    		var categoriesArr=new Array();
+    		var categoriesArr=[];
 
     		for (var i = 0; i < data.length; i++) {
     			categoriesArr.push(data[i][xName]);
@@ -72,7 +72,7 @@ define([
     		option.xAxis={
     			categories: categoriesArr,
                 gridLineWidth: 1
-    		}
+    		};
 
             utils.merge(true,chart.option,option);
     	},
@@ -101,7 +101,7 @@ define([
                 verticalAlign: 'top',
                 x: 20,
                 y: 30
-            }
+            };
 
             utils.merge(true,chart.option,option);
         },
@@ -127,7 +127,7 @@ define([
                 formatter:function(){
                     return '<b>' + this.x + '</b><br/>'+'<b>' + utils.getDisplayName(this.series.name) + '</b>:' + this.y ;
                 } 
-            }
+            };
             utils.merge(true,chart.option,option);
         }
     };

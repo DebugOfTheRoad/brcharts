@@ -79,6 +79,6 @@ define(["../utils/utils"],function(utils){
             };
             utils.merge(true,chart.option,option);
         }
-	}
+	};
 	return LegendTool;
 });

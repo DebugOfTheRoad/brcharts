@@ -58,8 +58,7 @@ define(["../utils/utils"],function(utils){
             var langOption;
 
             var en={
-
-            }
+            };
 
             var zh_cn={
                 loading:"加载中...",
@@ -69,16 +68,16 @@ define(["../utils/utils"],function(utils){
                 resetZoomTitle:"缩放",
                 shortMonths:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
                 weekdays:["周一","周二","周三","周四","周五","周六","周日"]
-            }
+            };
 
             switch(lang){
                 case "en":langOption=en;break;
                 case "zh-cn":langOption=zh_cn;break;
             }
 
-            Highcharts.setOptions({lang:langOption})
+            Highcharts.setOptions({lang:langOption});
 
         }
-	}
+	};
 	return OtherTool;
 });

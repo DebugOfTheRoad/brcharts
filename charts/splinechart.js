@@ -45,7 +45,7 @@ define([
 	                for (var j = 0; j < shows.length ; j++) {  
 	                	var oneSeries={};
 	                        oneSeries.name=groupKeys[i]+"("+shows[j]+")";
-	                        oneSeries.data=new Array();
+	                        oneSeries.data=[];
 	                    var data=groupMap.get(groupKeys[i]);
 	                	for (var k = 0; k < data.length; k++) {
 	                		if(data[k].hasOwnProperty(shows[j])){
@@ -87,7 +87,7 @@ define([
 	    			    month: '%e. %b',
 	                    year: '%b'
 	                }
-	    		}
+	    		};
 
 	            utils.merge(true,chart.option,option);
 	    	},

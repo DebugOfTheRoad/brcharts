@@ -46,7 +46,7 @@ define([
 	            for (var i = 0; i < groupKeys.length; i++) {  //shows.length-1
 	                var oneSeries={};
 	                oneSeries.name=groupKeys[i];
-	                oneSeries.data=new Array();
+	                oneSeries.data=[];
 	                oneSeries.pointPlacement='on';
 	                data=groupMap.get(groupKeys[i]);
 	                for (var j = 0; j < data.length ; j++) {  //data.length 
@@ -56,10 +56,10 @@ define([
 		      					oneData.y=data[j][shows[k]];
 		      					oneSeries.data.push(oneData);
 	                		}
-	                	};
-	                };
+	                	}
+	                }
 	                series.push(oneSeries);
-	            };
+	            }
 	            utils.merge(true,chart.option,option);
 	    	},
 
@@ -71,13 +71,13 @@ define([
 	    			option={};
                 for (var i = 0; i < shows.length; i++) {
                 	xNames.push(utils.getDisplayName(shows[i]));
-            	};
+            	}
 	    			
 	    		option.xAxis={
 	    			categories: xNames,
 	                tickmarkPlacement: 'on',
 	                lineWidth: 0
-	    		}
+	    		};
 	            utils.merge(true,chart.option,option);
 	    	},
 
@@ -88,7 +88,7 @@ define([
 	    		option.yAxis={
 	                gridLineInterpolation: 'polygon',
 	                lineWidth: 0
-	    		}
+	    		};
 
 	            utils.merge(true,chart.option,option);
 
