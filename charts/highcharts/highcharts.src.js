@@ -6487,8 +6487,8 @@ Axis.prototype = {
 
 		//判断如果自定义了y的函数，则使用log函数的逻辑
 		if(yFunction&&yInverseFunction){
-			lin2log=yFunction;
-			log2lin=yInverseFunction;
+			lin2log= yInverseFunction;
+			log2lin= yFunction;
 			axis.isLog='logarithmic'
 		}
 
@@ -7122,7 +7122,6 @@ Axis.prototype = {
 			tickPositions,
 			keepTwoTicksOnly,
 			categories = axis.categories;
-
 		// linked axis gets the extremes from the parent axis
 		if (isLinked) {
 			axis.linkedParent = chart[axis.coll][options.linkedTo];
@@ -8415,7 +8414,6 @@ Axis.prototype.getLogTickPositions = function (interval, min, max, minor) {
 		// Since we use this method for both major and minor ticks,
 		// use a local variable and return the result
 		positions = []; 
-	
 	// Reset
 	if (!minor) {
 		axis._minorAutoInterval = null;
@@ -10531,39 +10529,50 @@ Legend.prototype = {
 		
 		this.clipHeight = clipHeight = mathMax(spaceHeight - 20 - this.titleHeight - this.padding, 0);
 		if(legendHeight>20){
-				if (!clipRect) {
-					clipRect = legend.clipRect = renderer.clipRect(0, this.padding, 9999, 0);
-					legend.contentGroup.clip(clipRect);
-				}
-				clipRect.attr({
-					height: 15
-				});
-				if (!nav) {
-					this.nav = nav = renderer.g().attr({ zIndex: 1 }).add(this.group);
-					down = renderer.symbol('triangle-down', 0, 0, 15, 10)
-						.attr({"fill":"gray",x:-15,y:10})
-						.on('click', function () {
-							clipRect.attr({
-								height: clipHeight
-							});
-							down.hide();
-							up.show();
-						})
-						.add(nav);
-					up = renderer.symbol('triangle', 0, 0, 15, 10)
-						.attr({"fill":"gray",x:-15,y:10})
-						.on('click', function () {
-							clipRect.attr({
-								height: 15
-							});
-							up.hide();
-							down.show();
-						})
-						.add(nav);
-					up.hide();
-				}
+			if (!clipRect) {
+				clipRect = legend.clipRect = renderer.clipRect(0, this.padding, 9999, 0);
+				legend.contentGroup.clip(clipRect);
+			}
+			clipRect.attr({
+				height: 15
+			});
+			if (!nav) {
+				this.nav = nav = renderer.g().attr({ zIndex: 1 }).add(this.group);
+				down = renderer.symbol('triangle-down', 0, 0, 15, 10)
+					.attr({"fill":"gray",x:-15,y:10})
+					.on('click', function () {
+						clipRect.attr({
+							height: clipHeight
+						});
+						down.hide();
+						up.show();
+					})
+					.add(nav);
+				this.down=down;
+				up = renderer.symbol('triangle', 0, 0, 15, 10)
+					.attr({"fill":"gray",x:-15,y:10})
+					.on('click', function () {
+						clipRect.attr({
+							height: 15
+						});
+						up.hide();
+						down.show();
+					})
+					.add(nav);
+				up.hide();
+				this.up=up;
+			}else{
+				this.down.show();
+			}
+		}else{
+			if(this.up){
+				this.up.hide();
+			}
+			if(this.down){
+				this.down.hide();
 			}
 		}
+	}
 };
 
 /*
