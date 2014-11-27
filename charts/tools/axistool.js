@@ -524,6 +524,20 @@ define(["../utils/utils"],function(utils){
                     highchart.addSeries(oneSeries);    //添加数据列 
                 }   
             }   
+        },
+
+        //设置y分层
+        setYLayer:function(dividing,percent){
+            var chart=this,
+                option={};
+
+            option.yAxis={
+                isLayer:true,
+                dividing:dividing?dividing:null,
+                layerPercent:percent?percent:null
+            };
+
+            utils.merge(true,chart.option,option); 
         }
        
 	};

@@ -122,6 +122,41 @@ if (win.Highcharts) {
 } else {
 	Highcharts = win.Highcharts = {};
 }
+
+//获取obj的max
+function getArrObjMax(arr,field){
+	if(arr.length>0){
+		var max=arr[0][field];
+		var maxIndex=0;
+		for (var i = 0; i < arr.length; i++) {
+			if(arr[i][field]>max){
+				max=arr[i][field];
+				maxIndex=i;
+			}
+		}
+		return arr[maxIndex];
+	}else{
+		return null;
+	}
+}
+
+//获取obj的min
+function getArrObjMin(arr,field){
+	if(arr.length>0){
+		var min=arr[0][field];
+		var minIndex=0;
+		for (var i = 0; i < arr.length; i++) {
+			if(arr[i][field]<min){
+				min=arr[i][field];
+				minIndex=i;
+			}
+		}
+		return arr[minIndex];
+	}else{
+		return null;
+	}
+}
+
 /**
  * Extend an object with the members of another
  * @param {Object} a The object to be extended
@@ -6454,8 +6489,8 @@ Axis.prototype = {
 			type = options.type,
 			yFunction = options.yFunction,
 			yInverseFunction = options.yInverseFunction,
+			isLayer=options.isLayer,
 			isDatetimeAxis = type === 'datetime';
-
 		axis.labelFormatter = options.labels.formatter || axis.defaultLabelFormatter; // can be overwritten by dynamic format
 
 
@@ -6486,12 +6521,61 @@ Axis.prototype = {
 		axis.isDatetimeAxis = isDatetimeAxis;
 
 		//判断如果自定义了y的函数，则使用log函数的逻辑
-		if(yFunction&&yInverseFunction){
+		if(yFunction&&yInverseFunction&&!isXAxis){
 			lin2log= yInverseFunction;
 			log2lin= yFunction;
 			axis.isLog='logarithmic'
 		}
+		if(isLayer&&!isXAxis){
+			var series=axis.chart.options.series;
+			var maxArr=[];
+			var minArr=[];
+			for (var i = 0; i < series.length; i++) {
+				var max=getArrObjMax(series[i].data,"y").y;
+				maxArr.push(max);
+			};
+			for (var i = 0; i < series.length; i++) {
+				var min=getArrObjMin(series[i].data,"y").y;
+				minArr.push(min);
+			};
+			var max=Math.max.apply(Math,maxArr);
+			var min=Math.min.apply(Math,minArr);
+			var dividing=options.dividing?axis.options.dividing:Math.ceil((max+min)/2);
+			var layerPercent=options.layerPercent?options.layerPercent:0.25;
+			var all=8;
+			var up=Math.ceil(all*layerPercent);
+			var down=Math.ceil(all*(1-layerPercent));
+			var slope = Math.ceil( (dividing - min) / down );
 
+			var tenPower=1;
+			while((Math.log(max-dividing) / Math.log(Math.pow(10,tenPower)))+down>=up+down){
+				tenPower++;
+			}
+			log2lin= function(num){
+				var pos;
+				if(num<=dividing){
+					pos =  num/slope;
+				}else{
+					pos = (Math.log(num-dividing) / Math.log(Math.pow(10,tenPower)))+down;
+				}
+				return pos;
+			};
+			lin2log= function(num){
+			    if(num<=down){
+			    	return slope*num;
+			    }else{
+			    	return Math.pow(Math.pow(10,tenPower),num-down)+dividing ;
+			    }
+			};
+			axis.isLog='logarithmic';
+			axis.options.tickPositioner= function () {
+              	var positions = [] ;
+              	for(var i=0;i<=up+down;i++){
+              		positions.push(i);
+              	}
+                return positions;
+            }
+		}
 		// Flag, if axis is linked to another axis
 		axis.isLinked = defined(options.linkedTo);
 		// Linked axis.
@@ -7256,7 +7340,6 @@ Axis.prototype = {
 			if (!axis.ordinalPositions && (axis.max - axis.min) / axis.tickInterval > mathMax(2 * axis.len, 200)) {
 				error(19, true);
 			}
-
 			if (isDatetimeAxis) {
 				tickPositions = axis.getTimeTicks(
 					axis.normalizeTimeTickInterval(axis.tickInterval, options.units),
