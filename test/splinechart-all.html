@@ -20,7 +20,7 @@
                               {"taskName":"任务1","响应时间":4,"运行时间":5,"datetime":"2015-01-26 12:00"},
                               {"taskName":"任务1","响应时间":2,"运行时间":10,"datetime":"2015-03-26 12:00"},
                               {"taskName":"任务1","响应时间":6,"运行时间":5,"datetime":"2015-05-15 12:00"},
-                              {"taskName":"任务1","响应时间":8,"运行时间":10,"datetime":"2015-05-26 12:00"},
+                              {"taskName":"任务1","响应时间":50,"运行时间":10,"datetime":"2015-05-26 12:00"},
                               {"taskName":"任务1","响应时间":11,"运行时间":5,"datetime":"2015-07-26 12:00"},
                               {"taskName":"任务1","响应时间":17,"运行时间":10,"datetime":"2015-11-26 12:00"},
                               {"taskName":"任务2","响应时间":25,"运行时间":30,"datetime":"2014-01-01 08:00"},
@@ -52,14 +52,6 @@
                     chart.setOption(option);
                     chart.draw();
              /////////////////////////////////////////////////////////////////
-
-
-                    var shows=["运行时间"],
-                        yTitle="Time",
-                        yUnit="h",
-                        type="line";
- 
-                 
                     //是否显示图例
                     $("#inputIsShowLegend").on("click",function(){
                        if($(this).is(":checked")){
@@ -173,10 +165,18 @@
                     //设置y轴刻度不等分
                     $("#setYFunction").on("click",function(){
                         var YFunction=function(value){
-                            return Math.pow(2,value); 
+                            if(value>=25)
+                              return Math.log(value) / Math.LN10 + 25;
+                            else 
+                              return value/2;
                         };
                         var yInverseFunction=function(value){
-                            return Math.log(value) / Math.LN2;
+                            if(value>=25){
+                             return Math.pow(10,value-25);
+                            }else{
+                             return 2*value;
+                            }
+
                         };
                         chart.setYFunction(YFunction);
                         chart.setYInverseFunction(yInverseFunction);
@@ -451,6 +451,7 @@
     </head>
     <body>
         <div id="container"></div>
+        <label style="color:green">说明：鼠标放到点上显示浮层后，按住ctrl不放，浮层将固定住，松开后，取消固定</label>
         <fieldset>
            <legend>显示隐藏</legend>
            <input id="inputIsShowLegend" type="checkbox" checked="true">显示图例</input>
