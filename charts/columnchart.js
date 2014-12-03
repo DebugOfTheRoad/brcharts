@@ -13,8 +13,11 @@ define([
 	                groupMap;
 
 	            //分组
-	            groupMap=utils.group(userData,group);
-	            chart.groupMap=groupMap;
+	            if(group){
+	            	groupMap=utils.group(userData,group);
+	            	chart.groupMap=groupMap;
+	            }
+	            
 	        },
 
 	    	//重写mergeChartOption     --------确定显示的类型
@@ -37,30 +40,47 @@ define([
 	    		var chart=this,
 	    			option={},
 	    			series=option.series=[],	
-	    			
 	    			userOption=chart.userOption,    //option 
 	    			shows=userOption.shows,         //y轴要显示的指标
-	    			group=userOption.group,         //分组依据
-	    			groupMap=chart.groupMap,
-                	groupKeys=groupMap.keys();        //要显示的指标
+	    			group=userOption.group;         //分组依据
+	    
+                if(group){
+                	var groupMap=chart.groupMap;
+                	var groupKeys=groupMap.keys();        //要显示的指标
+                	for (var i = 0; i < groupKeys.length; i++) {
+		                for (var j = 0; j < shows.length ; j++) {  
+		                	var oneSeries={};
+		                        oneSeries.name=groupKeys[i]+"("+utils.getDisplayName([shows[j]])+")";
+		                        oneSeries.stack=groupKeys[i];             //堆栈显示依据
+		                        oneSeries.data=[];
+		                    var data=groupMap.get(groupKeys[i]);
+		                	for (var k = 0; k < data.length; k++) {
+		                		if(data[k].hasOwnProperty(shows[j])){
+		                			var oneData={};
+			      					oneData.y=data[k][shows[j]];
+			      					oneSeries.data.push(oneData);
+		                		}
+		                	}
+		                	series.push(oneSeries);
+		                }   
+		            }	
+                }else{
+                	 for (var j = 0; j < shows.length ; j++) {  
+		                	var oneSeries={};
+		                        oneSeries.name=utils.getDisplayName([shows[j]]);
+		                        oneSeries.data=[];
+		                    var data=chart.userData;
+		                	for (var k = 0; k < data.length; k++) {
+		                		if(data[k].hasOwnProperty(shows[j])){
+		                			var oneData={};
+			      					oneData.y=data[k][shows[j]];
+			      					oneSeries.data.push(oneData);
+		                		}
+		                	}
+		                	series.push(oneSeries);
+		                } 
+                }
 	    			
-	    		for (var i = 0; i < groupKeys.length; i++) {  
-	                for (var j = 0; j < shows.length ; j++) {  
-	                	var oneSeries={};
-	                        oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
-	                        oneSeries.stack=groupKeys[i];             //堆栈显示依据
-	                        oneSeries.data=[];
-	                    var data=groupMap.get(groupKeys[i]);
-	                	for (var k = 0; k < data.length; k++) {
-	                		if(data[k].hasOwnProperty(shows[j])){
-	                			var oneData={};
-		      					oneData.y=data[k][shows[j]];
-		      					oneSeries.data.push(oneData);
-	                		}
-	                	}
-	                	series.push(oneSeries);
-	                }   
-	            }	
 	            utils.merge(true,chart.option,option);
 	    	},
 
@@ -68,9 +88,18 @@ define([
 	    	mergeXAXisOption:function(){
 	    		var chart=this,
 	    			option={},
+	    			categoriesArr=[],
 	    			xName=chart.userOption.xName,
-	    			data=chart.userData;
-	    		var categoriesArr=utils.group(data,xName).keys();
+	    			data=chart.userData,
+	    			group=chart.userOption.group;
+
+    			if(group){
+					categoriesArr=utils.group(data,xName).keys();
+    			}else{
+    				for (var i = 0; i < data.length; i++) {
+    					categoriesArr.push(data[i][xName]);
+    				};
+    			}
 	    		option.xAxis={
 	    			categories: categoriesArr,
 	                gridLineWidth: 1

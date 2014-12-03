@@ -108,5 +108,22 @@ define(["./map","./field"],function(Map,fieldMap){
         }
         return map;
      };
+
+     /**
+     *长整形时间转utc
+     */
+     utils.longTimeToUTC=function(longTime){
+        var date=new Date(longTime);
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        var utc=Date.UTC(year,month,day,hour,minute,second);
+        return utc;
+     };
+
+     
     return utils;
 });

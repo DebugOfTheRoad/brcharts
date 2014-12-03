@@ -52,9 +52,7 @@ define([
 	                	for (var k = 0; k < data.length; k++) {
 	                		if(data[k].hasOwnProperty(shows[j])){
 	                			var oneData={};
-	                			var datetime=data[k][xName];
-			    			    var datetimeToUTC=chart.datetimeChangeToUTC(datetime);   //datetime转化为UTC格式
-			    			    oneData.x=datetimeToUTC;
+	                			oneData.x=utils.longTimeToUTC(Number(data[k][xName]));
 		      					oneData.y=data[k][shows[j]];
 		      					oneSeries.data.push(oneData);
 	                		}
@@ -67,18 +65,6 @@ define([
 	            utils.merge(true,chart.option,option);
 	    	},
 
-
-	    	//datetime转化为UTC格式
-	    	datetimeChangeToUTC:function(array){
-	    		var UTC;
-	    		array=array.split(" ");
-	    		array[0]=array[0].split("-");
-	    		array[1]=array[1].split(":");	
-	    		//将时间“2014-01-01 08:00”转化为二位数组“[[2014,1,1],[8,0]]”后，再转化为UTC格式
-	    		UTC=Date.UTC(array[0][0], array[0][1]-1, array[0][2], array[1][0], array[1][1]);
-	    		return UTC;
-	    	},
-	    	
 	    	//重写mergeXAXisOption     --------确定X轴显示的名称及刻度 
 	    	mergeXAXisOption:function(){
 	    		var chart=this,
