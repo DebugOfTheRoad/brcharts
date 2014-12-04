@@ -119,13 +119,19 @@ define([
          initYAxisOption:function(){
             var chart=this,
                 option=chart.option,
-                userOption=chart.userOption;
+                userOption=chart.userOption,
+                yTitle;
+
+            if(userOption.yTitle&&userOption.yTitle!=""){
+                yTitle=userOption.yUnit?userOption.yTitle+"("+userOption.yUnit+")":userOption.yTitle
+            }
 
             option.yAxis={
                  title:{
-                    text:userOption.yUnit?userOption.yTitle+"("+userOption.yUnit+")":userOption.yTitle
+                    text:yTitle
                  },
-                 tickLength:0
+                 tickLength:0,
+                 yUnit:userOption.yUnit
             };
             chart.mergeYAxisOption();
          },

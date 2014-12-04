@@ -33,7 +33,6 @@ define([
 		        
                 for(var k = 0; k < data.length ; k++){  
             		var oneData=[];
-
             		oneData.push(data[k][xName]);
       				oneData.push(data[k][show]);
       				oneSeries.data.push(oneData);

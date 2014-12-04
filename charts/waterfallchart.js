@@ -125,7 +125,8 @@ define([
 
             option.tooltip={
                 formatter:function(){
-                    return '<b>' + this.x + '</b><br/>'+'<b>' + utils.getDisplayName(this.series.name) + '</b>:' + this.y ;
+                    var yUnit=this.series.yAxis.options.yUnit || "";
+                    return '<b>' + this.x + '</b><br/>'+'<b>' + utils.getDisplayName(this.series.name) + '</b>:' + this.y +yUnit;
                 } 
             };
             utils.merge(true,chart.option,option);

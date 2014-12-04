@@ -1,21 +1,31 @@
 define(["../utils/utils"],function(utils){
 	var SeriesTool={
-		 //添加点
-        addPoint:function(seriesIndex,x,y){
+
+        addPoint:function(yObj){
             var chart=this,
+                shows=chart.userOption.shows,
+                xName=chart.userOption.xName,
                 highchart=chart.highchart,
-                chartType=chart.option.chart.type,
                 xDataType=highchart.xAxis[0].options.type;
 
             if(xDataType=='datetime'){
-                highchart.series[seriesIndex].addPoint([x,y]);
+                var x=utils.longTimeToUTC(Number(yObj[xName]));
+                for (var i = 0; i < shows.length; i++) {
+                    var y=Number(yObj[shows[i]]);
+                    highchart.series[i].addPoint([x,y]);
+                };
+                
             }else{
+                var x=yObj[xName];
+                for (var i = 0; i < shows.length; i++) {
+                    var y=Number(yObj[shows[i]]);
+                    highchart.series[i].addPoint([x,y]);
+                };
+                highchart.series[i].addPoint(y);
                 highchart.xAxis[0].options.categories.push(x);
-                highchart.series[seriesIndex].addPoint(y);
-            }              
+            }
         },
         
-        //更新点
         updatePoint:function(seriesIndex,pointIndex,color,type){
             var chart=this;
             var point=chart.option.series[seriesIndex].data[pointIndex];
@@ -24,11 +34,36 @@ define(["../utils/utils"],function(utils){
             point.marker.symbol=type;
         },
 
+        //更新点
+        updatePointValue:function(show,xValue,yValue){
+            var chart=this,
+                xName=chart.userOption.xName,
+                highchart=chart.highchart,
+                series=highchart.options.series,
+                seriesIndex,
+                pointIndex;
+            for (var i = 0; i < series.length; i++) {
+                if(series[i].name[0]==show){
+                    seriesIndex=i;
+                    var data=series[i].data;
+                    for (var j = 0; j < data.length; j++) {
+                        if(data[j][xName]==xValue){
+                            pointIndex=j;
+                            break;
+                        }
+                    };
+                }
+            };
+            if(seriesIndex!=undefined&&pointIndex!=undefined){
+                chart.updatePointValueByIndex(seriesIndex,pointIndex,yValue);
+            }
+            
+        },
+
         //更新点的值
-        updatePointValue:function(seriesIndex,pointIndex,yValue){
+        updatePointValueByIndex:function(seriesIndex,pointIndex,yValue){
             var chart=this,
                 highchart=chart.highchart;
-
             highchart.series[seriesIndex].data[pointIndex].update(yValue);
         },
         

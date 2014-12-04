@@ -53,6 +53,7 @@ define([
 	                	for (var k = 0; k < shows.length; k++) {
 	                		if(data[j].hasOwnProperty(shows[k])){
 	                			var oneData={};
+	                			utils.extend(oneData,data[k]);  //将所有属性赋予给数据
 		      					oneData.y=data[j][shows[k]];
 		      					oneSeries.data.push(oneData);
 	                		}
@@ -101,8 +102,9 @@ define([
 	    		    option.tooltip={
 	    		         shared: false,
                          formatter: function () {
-	    		    	       var str='<b>' +  utils.getDisplayName(this.series.name)+ '</b><br/>' + this.x  + ':</b> ' + this.y;
-	                      return str;
+                         	var yUnit=this.series.yAxis.options.yUnit || "";
+	    		    	    var str='<b>' +  utils.getDisplayName(this.series.name)+ '</b><br/>' + this.x  + ':</b> ' + this.y+yUnit;
+	                      	return str;
                          }
 	    		    };  
 	    		

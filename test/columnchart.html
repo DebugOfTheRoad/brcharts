@@ -33,14 +33,14 @@
                         subtitle: "副标题",          //副标题  
                         yTitle: "在线人数",          //y轴标题   
                         yUnit:"次",  
-                        xName: "城市",                //x轴显示的名称 
-                        inverted: false       //是否翻转 
+                        xName: "城市"               //x轴显示的名称 
                     };
                    
                     var chart=new ColumnChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();
+                    chart.updatePointValue("在线人数","北京",123);
                 });
             });
         </script>

@@ -33,7 +33,7 @@ define([
 		        
                 for(var k = 0; k < data.length ; k++){  
             		var oneData={};
-
+            		utils.extend(oneData,data[k]);  //将所有属性赋予给数据
             		oneData.name=data[k][xName];
       				oneData.y=data[k][show];
       				oneSeries.data.push(oneData);

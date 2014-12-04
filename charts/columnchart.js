@@ -50,13 +50,14 @@ define([
                 	for (var i = 0; i < groupKeys.length; i++) {
 		                for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};
-		                        oneSeries.name=groupKeys[i]+"("+utils.getDisplayName([shows[j]])+")";
+		                        oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
 		                        oneSeries.stack=groupKeys[i];             //堆栈显示依据
 		                        oneSeries.data=[];
 		                    var data=groupMap.get(groupKeys[i]);
 		                	for (var k = 0; k < data.length; k++) {
 		                		if(data[k].hasOwnProperty(shows[j])){
 		                			var oneData={};
+		                			utils.extend(oneData,data[k]);  //将所有属性赋予给数据
 			      					oneData.y=data[k][shows[j]];
 			      					oneSeries.data.push(oneData);
 		                		}
@@ -67,12 +68,13 @@ define([
                 }else{
                 	 for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};
-		                        oneSeries.name=utils.getDisplayName([shows[j]]);
+		                        oneSeries.name=[shows[j]];
 		                        oneSeries.data=[];
 		                    var data=chart.userData;
 		                	for (var k = 0; k < data.length; k++) {
 		                		if(data[k].hasOwnProperty(shows[j])){
 		                			var oneData={};
+		                			utils.extend(oneData,data[k]);  //将所有属性赋予给数据
 			      					oneData.y=data[k][shows[j]];
 			      					oneSeries.data.push(oneData);
 		                		}
@@ -128,8 +130,9 @@ define([
 	    		    option.tooltip={
                          shared: false,
                          formatter: function () {
-                             return '<b>'+utils.getDisplayName(this.x)+'</b><br>'+
-                                    '<b>' + utils.getDisplayName(this.series.name) + ':</b> ' + this.y ;
+                         	var yUnit=this.series.yAxis.options.yUnit || "";
+                            return '<b>'+utils.getDisplayName(this.x)+'</b><br>'+
+                                    '<b>' + utils.getDisplayName(this.series.name) + ':</b> ' + this.y +yUnit;
                          }
 	    		    };  
 	    		

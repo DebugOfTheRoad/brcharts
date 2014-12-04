@@ -52,6 +52,7 @@ define([
 	                	for (var k = 0; k < data.length; k++) {
 	                		if(data[k].hasOwnProperty(shows[j])){
 	                			var oneData={};
+	                			utils.extend(oneData,data[k]);  //将所有属性赋予给数据
 	                			oneData.x=utils.longTimeToUTC(Number(data[k][xName]));
 		      					oneData.y=data[k][shows[j]];
 		      					oneSeries.data.push(oneData);
@@ -86,13 +87,13 @@ define([
 	    	//重写mergeTooltipOption    --------提示框设置 
 	    	mergeTooltipOption:function(){
 	    		var chart=this,
-	    			yUnit=chart.userOption.yUnit||"",
     			    option={};
 	    		    option.tooltip={
                         formatter: function () {
-	    		    	       var str='<e>' + Highcharts.dateFormat('%m-%d %H:%M', this.x) + '<br/>'
+                        	var yUnit=this.series.yAxis.options.yUnit || "";
+	    		    	    var str='<e>' + Highcharts.dateFormat('%m-%d %H:%M', this.x) + '<br/>'
 	    		    	       + utils.getDisplayName(this.series.name) + ':' + this.y+yUnit;
-	                      return str;
+	                      	return str;
                          }
 	    		    };  
 	    		

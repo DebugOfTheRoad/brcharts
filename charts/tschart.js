@@ -178,12 +178,12 @@ define([
         mergeTitleOption:function(){
             var chart=this,
                 option={},
-                yUnit=chart.userOption.yUnit,
                 dimension=chart.userOption.dimension,
                 xName=chart.userOption.xName;
 
             option.tooltip={
                 formatter:function(){
+                    var yUnit=this.series.yAxis.options.yUnit || "";
                     if(dimension)
                         return '<b>' + this.point[xName] + '</b><br/>' + this.series.name + '<br/>'+utils.getDisplayName(this.point._showField)+":" + this.y +yUnit ;
                     else
