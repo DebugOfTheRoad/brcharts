@@ -477,8 +477,8 @@ define(["../utils/utils"],function(utils){
             highchart=chart.highchart,
             userOption=chart.userOption,
             xName=userOption.xName,
-            groupMap=chart.groupMap,
-            groupKeys=groupMap.keys(),        //要显示的指标;
+            group=userOption.group,
+            xAxis_type=chart.option.xAxis.type,
             chart_type=chart.option.chart.type;  
 
             if(chart_type!="spline"&&chart_type!="scatter"&&chart_type!="column"){
@@ -490,6 +490,7 @@ define(["../utils/utils"],function(utils){
                 title: {
                    text: yTitle+"("+yUnit+")"
                 },
+                yUnit: yUnit,
                 lineWidth: 1,
                 tickLength: 10,
                 tickWidth: 1,
@@ -497,33 +498,62 @@ define(["../utils/utils"],function(utils){
             };
             highchart.addAxis(yAxis);    //添加Y轴 
 
-            for (var i = 0; i < groupKeys.length; i++) {  
-                for (var j = 0; j < shows.length ; j++) {  
-                    var oneSeries={};
-                        oneSeries.name=groupKeys[i]+"("+shows[j]+")";
-                        if(type){
-                            oneSeries.type=type;
-                        }else{
-                            oneSeries.type=chart.option.chart.type;
-                        }
-                        oneSeries.yAxis=yTitle;
-                        oneSeries.data=[];
-                    var data=groupMap.get(groupKeys[i]);
-                    for (var k = 0; k < data.length; k++) {
-                        if(data[k].hasOwnProperty(shows[j])){
-                            var oneData={};
-                            var datetime=data[k][xName]; 
-                            if(datetime.match("-")!==null){
-                                var datetimeToUTC=chart.datetimeChangeToUTC(datetime);   //datetime转化为UTC格式
-                                oneData.x=datetimeToUTC;
+            if(group){
+                    var groupMap=chart.groupMap;
+                    var groupKeys=groupMap.keys();
+                    for (var i = 0; i < groupKeys.length; i++) {
+                        for (var j = 0; j < shows.length ; j++) {  
+                            var oneSeries={};
+                            if(type){
+                                oneSeries.type=type;
+                            }else{
+                                oneSeries.type=chart.option.chart.type;
                             }
-                            oneData.y=data[k][shows[j]];
-                            oneSeries.data.push(oneData);
-                        }
-                    }
-                    highchart.addSeries(oneSeries);    //添加数据列 
-                }   
-            }   
+                            oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
+                            oneSeries.stack=groupKeys[i];             //堆栈显示依据
+                            oneSeries.yAxis=yTitle;
+                            oneSeries.data=[];
+                            var data=groupMap.get(groupKeys[i]);
+                            for (var k = 0; k < data.length; k++) {
+                                if(data[k].hasOwnProperty(shows[j])){
+                                    var oneData={};
+                                    utils.extend(oneData,data[k]);  //将所有属性赋予给数据
+                                    if(xAxis_type=='datetime'){
+                                       oneData.x=utils.longTimeToUTC(Number(data[k][xName])); 
+                                    }
+                                    oneData.y=data[k][shows[j]];
+                                    oneSeries.data.push(oneData);
+                                }
+                            }
+                            highchart.addSeries(oneSeries);
+                        }   
+                    }   
+                }else{
+                     for (var j = 0; j < shows.length ; j++) {  
+                            var oneSeries={};
+                            if(type){
+                                oneSeries.type=type;
+                            }else{
+                                oneSeries.type=chart.option.chart.type;
+                            }
+                            oneSeries.name=[shows[j]];
+                            oneSeries.yAxis=yTitle;
+                            oneSeries.data=[];
+                            var data=chart.userData;
+                            for (var k = 0; k < data.length; k++) {
+                                if(data[k].hasOwnProperty(shows[j])){
+                                    var oneData={};
+                                    utils.extend(oneData,data[k]);  //将所有属性赋予给数据
+                                    if(xAxis_type=='datetime'){
+                                       oneData.x=utils.longTimeToUTC(Number(data[k][xName])); 
+                                    }
+                                    oneData.y=data[k][shows[j]];
+                                    oneSeries.data.push(oneData);
+                                }
+                            }
+                            highchart.addSeries(oneSeries);
+                        } 
+                }  
         },
 
         //设置y分层

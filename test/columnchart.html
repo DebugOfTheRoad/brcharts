@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
         <script src="../charts/lib/jquery-1.8.3.js"></script>
         <script src="../charts/highcharts/highcharts.src.js"></script>
-        <script src="../charts/lib/require.js"></script>  
+        <script data-main="../build/main" src="../charts/lib/require.js"></script>  
         <script>
-            require(["../charts/columnchart"],function(ColumnChart){
+            require(["columnchart"],function(ColumnChart){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000},
                                 {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000},
@@ -40,7 +40,9 @@
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();
-                    chart.updatePointValue("在线人数","北京",123);
+                    chart.addPoint({"taskName":"任务1","城市":"北京11","在线人数":20000,"报警次数":300});
+                    chart.updatePointValue({"taskName":"任务1","城市":"北京11","在线人数":20000,"报警次数":3000});
+
                 });
             });
         </script>

@@ -76,6 +76,11 @@
                     $("#inputIsShowY").on("click",function(){  
 
                         if($(this).is(":checked")){
+                            var shows=["运行时间"],
+                                yTitle="运行时间",
+                                yUnit="ml",
+                                type="line";
+                            
                             chart.addYAxis(shows,yTitle,yUnit,type); 
                         }else{
                             chart.setData(data);

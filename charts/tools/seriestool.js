@@ -12,17 +12,19 @@ define(["../utils/utils"],function(utils){
                 var x=utils.longTimeToUTC(Number(yObj[xName]));
                 for (var i = 0; i < shows.length; i++) {
                     var y=Number(yObj[shows[i]]);
-                    highchart.series[i].addPoint([x,y]);
+                    yObj.x=x;
+                    yObj.y=y;
+                    highchart.series[i].addPoint(yObj);
                 };
                 
             }else{
                 var x=yObj[xName];
+                highchart.xAxis[0].options.categories.push(x);
                 for (var i = 0; i < shows.length; i++) {
                     var y=Number(yObj[shows[i]]);
-                    highchart.series[i].addPoint([x,y]);
+                    yObj.y=y;
+                    highchart.series[i].addPoint(yObj);
                 };
-                highchart.series[i].addPoint(y);
-                highchart.xAxis[0].options.categories.push(x);
             }
         },
         
@@ -34,8 +36,32 @@ define(["../utils/utils"],function(utils){
             point.marker.symbol=type;
         },
 
-        //更新点
-        updatePointValue:function(show,xValue,yValue){
+        //更新点的值，yobj为原始数据数组的一个对象
+        updatePointValue:function(yObj){
+            var chart=this,
+                shows=chart.userOption.shows,
+                xName=chart.userOption.xName,
+                highchart=chart.highchart,
+                xDataType=highchart.xAxis[0].options.type;
+
+            if(xDataType=='datetime'){
+                var x=utils.longTimeToUTC(Number(yObj[xName]));
+                for (var i = 0; i < shows.length; i++) {
+                    var y=Number(yObj[shows[i]]);
+                    chart.updatePointValueByArg(shows[i],x,y);
+                };
+                
+            }else{
+                var x=yObj[xName];
+                for (var i = 0; i < shows.length; i++) {
+                    var y=Number(yObj[shows[i]]);
+                    chart.updatePointValueByArg(shows[i],x,y);
+                };
+            }
+        },
+
+        //更新点的值
+        updatePointValueByArg:function(show,xValue,yValue){
             var chart=this,
                 xName=chart.userOption.xName,
                 highchart=chart.highchart,
@@ -55,16 +81,9 @@ define(["../utils/utils"],function(utils){
                 }
             };
             if(seriesIndex!=undefined&&pointIndex!=undefined){
-                chart.updatePointValueByIndex(seriesIndex,pointIndex,yValue);
+                highchart.series[seriesIndex].data[pointIndex].update(yValue);
             }
             
-        },
-
-        //更新点的值
-        updatePointValueByIndex:function(seriesIndex,pointIndex,yValue){
-            var chart=this,
-                highchart=chart.highchart;
-            highchart.series[seriesIndex].data[pointIndex].update(yValue);
         },
         
         //移除数据列

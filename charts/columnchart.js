@@ -46,7 +46,7 @@ define([
 	    
                 if(group){
                 	var groupMap=chart.groupMap;
-                	var groupKeys=groupMap.keys();        //要显示的指标
+                	var groupKeys=groupMap.keys();
                 	for (var i = 0; i < groupKeys.length; i++) {
 		                for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};

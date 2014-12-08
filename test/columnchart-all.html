@@ -44,11 +44,6 @@
                     chart.setOption(option);
                     chart.draw();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                    var shows=["降雨量"],
-                        yTitle="降雨量",
-                        yUnit="ml",
-                        type="line";
  
                  
                     //是否显示图例
@@ -75,6 +70,11 @@
                     $("#inputIsShowY").on("click",function(){
 
                         if($(this).is(":checked")){
+                            var shows=["降雨量"],
+                                yTitle="降雨量",
+                                yUnit="ml",
+                                type="line";
+                            
                             chart.addYAxis(shows,yTitle,yUnit,type); 
                         }else{
                             chart.setData(data);

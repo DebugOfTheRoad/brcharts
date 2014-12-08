@@ -7,7 +7,7 @@
         <title>轴 | 图表接口文档</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 1.3.3">
+        <meta name="generator" content="GitBook 1.0.3">
         <meta name="HandheldFriendly" content="true"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,6 +15,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
         <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
         
+    
     
     
     <link rel="next" href="./15.html" />
@@ -32,7 +33,7 @@
 
 
         
-    <div class="book" data-level="3.3" data-basepath="." data-revision="1416906607799">
+    <div class="book"  data-level="3.3" data-basepath="." data-revision="1417678234884">
     
 
 <div class="book-summary">
@@ -454,7 +455,7 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_6">
+                    <section class="normal" id="section-gitbook_1549">
                     
                         <h2 id="33-">3.3. 轴</h2>
 <table>
@@ -605,6 +606,11 @@
 <td><strong>addYAxis</strong>(<code>Array</code> shows,<code>String</code> yTitle,<code>String</code> yUnit,<code>String</code> type)</td>
 <td><code>shows</code>显示的字段，<code>yTitle</code>y轴标题，<code>yUnit</code>y轴单位，<code>type</code>图的类型</td>
 <td>添加y轴</td>
+</tr>
+<tr>
+<td><strong>setYLayer</strong>(<code>Number</code> dividing，<code>Number</code> percent)</td>
+<td><code>dividing</code>临界值，<code>percent</code> 上下比例，小数</td>
+<td>设置y轴分层，如setYLayer(20,0.5)，用于曲线图和散点图</td>
 </tr>
 </tbody>
 </table>
