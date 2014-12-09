@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 			compile: {
 				options: {
 					baseUrl: "./charts",
-					dir: "./build",
+					dir: "./built/brcharts",
 					optimize: "none",//uglify
 					modules: [
 						{
@@ -39,10 +39,10 @@ module.exports = function(grunt) {
 		clean: { 
 			build: { 
 				src: [
-					"./build/tools", 
-					"./build/utils",
-					"./build/chart.js",
-					"./build/build.txt"
+					"./built/brcharts/tools", 
+					"./built/brcharts/utils",
+					"./built/brcharts/chart.js",
+					"./built/brcharts/build.txt"
 				] 
 			} 
 		},
@@ -52,18 +52,22 @@ module.exports = function(grunt) {
 			},
 			build: {
 				expand:true,
-				src: "./build/**/*.js",
-				dest: "./build/min"
+				src: "./built/brcharts/**/*.js",
+				dest: "./built/brcharts/min"
 			}
 		},
 		copy:{
 			main:{
 				src:"./main.js",
-				dest:"./build/main.js"
+				dest:"./built/brcharts/main.js"
 			},
 			minmain:{
 				src:"./main.js",
-				dest:"./build/min/build/main.js"
+				dest:"./built/brcharts/min/built/brcharts/main.js"
+			},
+			doc:{
+				src:["./test/**","./charts/**"],
+				dest:"./doc/brcharts/"
 			}
 		},
 	});

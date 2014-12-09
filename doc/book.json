@@ -1,1 +1,12 @@
-{}
+{
+	"output":"../built/doc",
+    "links": {
+        "sharing": {
+            "google": false,
+            "facebook": false,
+            "twitter": false,
+            "weibo": false,
+            "all":false
+        }
+    }
+}
