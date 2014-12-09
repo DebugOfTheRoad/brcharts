@@ -1,4 +1,4 @@
-{
+({
 	baseUrl: "./charts",
 	modules: [
 		{
@@ -24,4 +24,4 @@
 			name: "waterfallchart"
 		}
 	]
-}
+})

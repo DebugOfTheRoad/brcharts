@@ -156,6 +156,7 @@ define([
         //重写mergeLegendOption
         mergeLegendOption:function(){
             var chart=this,
+                fields=chart.fields,
                 dimension=chart.userOption.dimension,
                 option={};
 
@@ -167,7 +168,7 @@ define([
                     if(dimension)
                         return this.name;
                     else
-                        return utils.getDisplayName(this.name);
+                        return utils.getDisplayName(fields,this.name);
                 }
             };
 
@@ -178,6 +179,7 @@ define([
         mergeTitleOption:function(){
             var chart=this,
                 option={},
+                fields=chart.fields,
                 dimension=chart.userOption.dimension,
                 xName=chart.userOption.xName;
 
@@ -185,9 +187,9 @@ define([
                 formatter:function(){
                     var yUnit=this.series.yAxis.options.yUnit || "";
                     if(dimension)
-                        return '<b>' + this.point[xName] + '</b><br/>' + this.series.name + '<br/>'+utils.getDisplayName(this.point._showField)+":" + this.y +yUnit ;
+                        return '<b>' + this.point[xName] + '</b><br/>' + this.series.name + '<br/>'+utils.getDisplayName(fields,this.point._showField)+":" + this.y +yUnit ;
                     else
-                        return '<b>' + this.point[xName] + '</b><br/>' + utils.getDisplayName(this.series.name) + ":" + this.y +yUnit ;
+                        return '<b>' + this.point[xName] + '</b><br/>' + utils.getDisplayName(fields,this.series.name) + ":" + this.y +yUnit ;
                 } 
             };
             utils.merge(true,chart.option,option);

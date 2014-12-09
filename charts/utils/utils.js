@@ -1,4 +1,4 @@
-define(["./map","./field"],function(Map,fieldMap){
+define(["./map"],function(Map){
     var utils=function(){
     };
 
@@ -83,12 +83,14 @@ define(["./map","./field"],function(Map,fieldMap){
      *获取字段显示的名称
      *@param {String} field
      */
-    utils.getDisplayName=function(field){
+    utils.getDisplayName=function(fileds,field){
         var name;
+        
+        if(fileds){
+           name=fileds[field]; 
+        }
 
-        name=fieldMap.get(field);
-
-        return name?name:field;
+        return name||field;
     };
 
     /**

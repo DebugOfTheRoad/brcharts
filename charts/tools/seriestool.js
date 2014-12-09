@@ -1,30 +1,54 @@
 define(["../utils/utils"],function(utils){
 	var SeriesTool={
 
-        addPoint:function(yObj){
+        addPoint:function(yObj){  
             var chart=this,
                 shows=chart.userOption.shows,
                 xName=chart.userOption.xName,
+                group=chart.userOption.group,
                 highchart=chart.highchart,
                 xDataType=highchart.xAxis[0].options.type;
 
             if(xDataType=='datetime'){
                 var x=utils.longTimeToUTC(Number(yObj[xName]));
                 for (var i = 0; i < shows.length; i++) {
-                    var y=Number(yObj[shows[i]]);
-                    yObj.x=x;
-                    yObj.y=y;
-                    highchart.series[i].addPoint(yObj);
-                };
-                
+                    if(yObj.hasOwnProperty(shows[i])){  
+                        var y=Number(yObj[shows[i]]);
+                        yObj.x=x;
+                        yObj.y=y; 
+                        if(group){
+                            var groupMap=chart.groupMap;
+                            var groupKeys=groupMap.keys();
+                            for (var j = 0; j < groupKeys.length; j++) {
+                                if(groupKeys[j]==yObj[group]){  
+                                    highchart.series[shows.length*j+i].addPoint(yObj); 
+                                }
+                            };
+                        }else{
+                            highchart.series[i].addPoint(yObj);
+                        }
+                    }    
+                };  
             }else{
                 var x=yObj[xName];
                 highchart.xAxis[0].options.categories.push(x);
                 for (var i = 0; i < shows.length; i++) {
-                    var y=Number(yObj[shows[i]]);
-                    yObj.y=y;
-                    highchart.series[i].addPoint(yObj);
-                };
+                    if(yObj.hasOwnProperty(shows[i])){
+                        var y=Number(yObj[shows[i]]);
+                        yObj.y=y;   
+                        if(group){
+                            var groupMap=chart.groupMap;
+                            var groupKeys=groupMap.keys();
+                            for (var j = 0; j < groupKeys.length; j++) {
+                                if(groupKeys[j]==yObj[group]){
+                                    highchart.series[shows.length*j+i].addPoint(yObj); 
+                                }
+                            };
+                        }else{
+                            highchart.series[i].addPoint(yObj);
+                        }
+                    }
+                }
             }
         },
         
@@ -37,18 +61,31 @@ define(["../utils/utils"],function(utils){
         },
 
         //更新点的值，yobj为原始数据数组的一个对象
-        updatePointValue:function(yObj){
+        updatePointValue:function(yObj){  
             var chart=this,
                 shows=chart.userOption.shows,
                 xName=chart.userOption.xName,
+                group=chart.userOption.group,
                 highchart=chart.highchart,
                 xDataType=highchart.xAxis[0].options.type;
 
-            if(xDataType=='datetime'){
-                var x=utils.longTimeToUTC(Number(yObj[xName]));
+            if(xDataType=='datetime'){  
+                var x=yObj[xName];  
                 for (var i = 0; i < shows.length; i++) {
-                    var y=Number(yObj[shows[i]]);
-                    chart.updatePointValueByArg(shows[i],x,y);
+                    if(yObj.hasOwnProperty(shows[i])){  
+                        var y=Number(yObj[shows[i]]);
+                        if(group){
+                            var groupMap=chart.groupMap;
+                            var groupKeys=groupMap.keys();
+                            for (var j = 0; j < groupKeys.length; j++) {
+                                if(groupKeys[j]==yObj[group]){  
+                                    chart.updatePointValueByArg(groupKeys[j]+"("+[shows[i]]+")",x,y);
+                                }
+                            };
+                        }else{
+                            chart.updatePointValueByArg(shows[i],x,y);
+                        }
+                    }  
                 };
                 
             }else{
@@ -61,19 +98,19 @@ define(["../utils/utils"],function(utils){
         },
 
         //更新点的值
-        updatePointValueByArg:function(show,xValue,yValue){
+        updatePointValueByArg:function(show,xValue,yValue){   
             var chart=this,
                 xName=chart.userOption.xName,
                 highchart=chart.highchart,
                 series=highchart.options.series,
                 seriesIndex,
                 pointIndex;
-            for (var i = 0; i < series.length; i++) {
-                if(series[i].name[0]==show){
+            for (var i = 0; i < series.length; i++) {   
+                if(series[i].name==show){ 
                     seriesIndex=i;
-                    var data=series[i].data;
+                    var data=series[i].data;  
                     for (var j = 0; j < data.length; j++) {
-                        if(data[j][xName]==xValue){
+                        if(data[j][xName]==xValue){   
                             pointIndex=j;
                             break;
                         }

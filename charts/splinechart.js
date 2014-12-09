@@ -106,13 +106,14 @@ define([
 	    	//重写mergeTooltipOption    --------提示框设置 
 	    	mergeTooltipOption:function(){
 	    		var chart=this,
+	    			fields=chart.fields,
     			    option={};
 	    		    option.tooltip={
 	    		         shared: false,
                          formatter: function () {
                          	var yUnit=this.series.yAxis.options.yUnit || "";
 	    		    	    var str='<e>' + Highcharts.dateFormat('%m-%d %H:%M', this.x) + '<br/>'
-	    		    	       + utils.getDisplayName(this.series.name) + ':' + this.y+yUnit;
+	    		    	       + utils.getDisplayName(fields,this.series.name) + ':' + this.y+yUnit;
 	                      	return str;
                          }
 	    		    };  

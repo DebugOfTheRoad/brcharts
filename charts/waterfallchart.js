@@ -121,12 +121,13 @@ define([
         //重写mergeTitleOption
         mergeTitleOption:function(){
             var chart=this,
+                fields=chart.fields,
                 option={};
 
             option.tooltip={
                 formatter:function(){
                     var yUnit=this.series.yAxis.options.yUnit || "";
-                    return '<b>' + this.x + '</b><br/>'+'<b>' + utils.getDisplayName(this.series.name) + '</b>:' + this.y +yUnit;
+                    return '<b>' + this.x + '</b><br/>'+'<b>' + utils.getDisplayName(fields,this.series.name) + '</b>:' + this.y +yUnit;
                 } 
             };
             utils.merge(true,chart.option,option);

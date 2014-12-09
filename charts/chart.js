@@ -46,6 +46,7 @@ define([
         setOption:function(userOption){
             var chart=this;
             chart.userOption=userOption;
+            chart.fields=userOption.fields;
 
             chart.processData();        //基础数据处理
             chart.initChartOption();    //设置chart的option
@@ -139,13 +140,14 @@ define([
          //初始化图例
          initLegendOption:function(){
             var chart=this,
-                option=chart.option;
+                option=chart.option,
+                fields=chart.fields;
 
             option.legend={
                 isAlignment:true,
                 isFold:true,
                 labelFormatter:function(){
-                    return utils.getDisplayName(this.name);
+                    return utils.getDisplayName(fields,this.name);
                 }
             };
 

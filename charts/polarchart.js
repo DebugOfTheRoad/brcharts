@@ -68,10 +68,11 @@ define([
 	    	mergeXAXisOption:function(){
 	    		var chart=this,
 	    			shows=this.userOption.shows,
+	    			fields=chart.fields,
 	    			xNames=[],
 	    			option={};
                 for (var i = 0; i < shows.length; i++) {
-                	xNames.push(utils.getDisplayName(shows[i]));
+                	xNames.push(utils.getDisplayName(fields,shows[i]));
             	}
 	    			
 	    		option.xAxis={
@@ -98,12 +99,13 @@ define([
 	    	//重写mergeTooltipOption    --------提示框设置 
 	    	mergeTooltipOption:function(){
 	    		var chart=this,
+	    			fields=chart.fields,
     			    option={};
 	    		    option.tooltip={
 	    		         shared: false,
                          formatter: function () {
                          	var yUnit=this.series.yAxis.options.yUnit || "";
-	    		    	    var str='<b>' +  utils.getDisplayName(this.series.name)+ '</b><br/>' + this.x  + ':</b> ' + this.y+yUnit;
+	    		    	    var str='<b>' +  utils.getDisplayName(fields,this.series.name)+ '</b><br/>' + this.x  + ':</b> ' + this.y+yUnit;
 	                      	return str;
                          }
 	    		    };  
