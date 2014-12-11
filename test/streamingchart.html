@@ -8,9 +8,7 @@
         <script src="../charts/highcharts/highcharts-more.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/tschart"
-            ],function(WaterfallChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[
                     {name:"DISPATCH TOL Time",DISPATCH_TOL_TIME:1,start:-1},
@@ -40,7 +38,7 @@
                         xName:"name",
                         group:"name"
                     };
-                    var chart=new WaterfallChart();
+                    var chart=new brcharts.TsChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();

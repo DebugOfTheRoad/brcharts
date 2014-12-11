@@ -8,9 +8,7 @@
         <script src="../charts/highcharts/highcharts-more.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/polarchart"
-            ],function(PolarChart){
+            require(["../charts/brcharts"],function(brcharts){
               $(function(){
                   var data=[{"taskName":"任务1","aa":5},
                             {"taskName":"任务1","bb":8}, 
@@ -35,7 +33,7 @@
                       group:"taskName"
                   };
                   
-                  var chart=new PolarChart();
+                  var chart=new brcharts.PolarChart();
                   chart.setData(data);
                   chart.setOption(option);
                   chart.draw();

@@ -1,0 +1,21 @@
+define([
+    "./columnchart",
+    "./piechart",
+    "./polarchart",
+    "./ringchart",
+    "./scatterchart",
+    "./splinechart",
+    "./tschart",
+    "./waterfallchart"
+],function(ColumnChart,PieChart,PolarChart,RingChart,ScatterChart,SplineChart,TsChart,WaterfallChart){
+	return {
+		ColumnChart:ColumnChart,
+		PieChart:PieChart,
+		PolarChart:PolarChart,
+		RingChart:RingChart,
+		ScatterChart:ScatterChart,
+		SplineChart:SplineChart,
+		TsChart:TsChart,
+		WaterfallChart:WaterfallChart
+	}
+});

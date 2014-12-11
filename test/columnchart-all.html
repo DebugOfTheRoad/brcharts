@@ -7,7 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require(["../charts/columnchart"],function(ColumnChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000,"降雨量":174},
                                 {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000,"降雨量":185},
@@ -39,7 +39,7 @@
                         stacking: "normal"     //堆栈显示类型：null=禁用，normal=正常，percent=百分比 
                     };
                    
-                    var chart=new ColumnChart();
+                    var chart=new brcharts.ColumnChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();

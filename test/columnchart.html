@@ -7,7 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require(["../charts/columnchart"],function(ColumnChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","P_NUM":520000,"COUNT":52000},
                                 {"taskName":"任务1","城市":"天津","P_NUM":360000,"COUNT":36000},
@@ -40,7 +40,7 @@
                         } 
                     };
                    
-                    var chart=new ColumnChart();
+                    var chart=new brcharts.ColumnChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();

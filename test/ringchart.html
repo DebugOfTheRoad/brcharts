@@ -7,9 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/ringchart"
-            ],function(RingChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","在线人数":80,"报警次数":52000},
                                 {"taskName":"任务1","城市":"天津tian","在线人数":76,"报警次数":36000},
@@ -26,7 +24,7 @@
                         xName:"城市"				//x轴显示的名称 
                     };
                    
-                    var chart=new RingChart();
+                    var chart=new brcharts.RingChart();
                     chart.setData(data);
                     chart.setOption(option);    
                     chart.draw();

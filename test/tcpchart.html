@@ -8,9 +8,7 @@
         <script src="../charts/highcharts/highcharts-more.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/tschart"
-            ],function(WaterfallChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[
                     {url:"qq",time1:1,start:0,tcp:"11",time2:2,type:"image"},
@@ -41,7 +39,7 @@
                         xName:"url",
                         dimension:"type"
                     };
-                    var chart=new WaterfallChart();
+                    var chart=new brcharts.TsChart();
                     chart.setData(data);
                     chart.setOption(option);
                     // var formatter=function(){

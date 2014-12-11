@@ -7,9 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/splinechart"
-            ],function(SplineChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[{"taskName":"任务1","响应时间":5,"运行时间":5,"datetime":"1417592120633"},//Tue 
                               {"taskName":"任务1","响应时间":8,"运行时间":5,"datetime":"1417592149278"}, 
@@ -30,7 +28,7 @@
                         group:"taskName"      //分组依据
                     };
                     
-                    var chart=new SplineChart(); 
+                    var chart=new brcharts.SplineChart(); 
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();

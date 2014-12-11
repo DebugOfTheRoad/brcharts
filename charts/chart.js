@@ -121,10 +121,13 @@ define([
             var chart=this,
                 option=chart.option,
                 userOption=chart.userOption,
-                yTitle;
+                yTitle="";
 
-            if(userOption.yTitle&&userOption.yTitle!=""){
-                yTitle=userOption.yUnit?userOption.yTitle+"("+userOption.yUnit+")":userOption.yTitle
+            if(userOption.yTitle){
+                yTitle=userOption.yTitle;
+            }
+            if(userOption.yUnit){
+                yTitle+="("+userOption.yUnit+")";
             }
 
             option.yAxis={

@@ -8,9 +8,7 @@
         <script src="../charts/highcharts/themes/gray.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/scatterchart"
-            ],function(ScatterChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                          var data=[{"taskName":"任务1","响应时间":5,"运行时间":5,"datetime":"1417593120633"},
                               {"taskName":"任务1","响应时间":8,"运行时间":10,"datetime":"1417593120633"}, 
@@ -48,7 +46,7 @@
                         group:"taskName"      //分组依据 
                     };
                     
-                    var chart=new ScatterChart();
+                    var chart=new brcharts.ScatterChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();

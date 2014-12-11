@@ -7,9 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/piechart"
-            ],function(PieChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000},
                                 {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000},
@@ -25,7 +23,7 @@
                         xName:"城市"				 
                     };
                    
-                    var chart=new PieChart();
+                    var chart=new brcharts.PieChart();
                     chart.setData(data);
                     chart.setOption(option);   
                     chart.draw();

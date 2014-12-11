@@ -8,9 +8,7 @@
         <script src="../charts/highcharts/highcharts-more.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require([
-                "../charts/waterfallchart"
-            ],function(WaterfallChart){
+            require(["../charts/brcharts"],function(brcharts){
                 $(function(){
                     var data=[
                         {"元素名称":"http://inews.gtimg.com/newsapp_ls/0/27809605_150110/0","类型":"image/jpeg","总下载时间":1.939,"起始时间":0.504,"阻塞时间":1.902,"DNS用时":0.006,"TCP用时":0.017,"请求用时":0.011,"响应用时":0.013,"元素下载用时":0.001,"SSL握手用时":0},
@@ -638,7 +636,7 @@
                         startName:"起始时间",    //代表起始时间字段
                         xName:"元素名称"        //x轴要显示的字段
                     };
-                    var chart=new WaterfallChart();
+                    var chart=new brcharts.WaterfallChart();
                     chart.setData(data);
                     chart.setOption(option);
 

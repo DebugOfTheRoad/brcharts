@@ -11,27 +11,27 @@ module.exports = function(grunt) {
 					optimize: "none",//uglify
 					modules: [
 						{
-							name: "tschart"
-						},
-						{
-							name: "columnchart"
-						},
-						{
-							name: "piechart"
-						},
-						{
-							name: "polarchart"
-						},
-						{
-							name: "ringchart"
-						},
-						{
-							name: "scatterchart"
-						},{
-							name: "splinechart"
-						},{
-							name: "waterfallchart"
+							name: "brcharts"
 						}
+						// {
+						// 	name: "columnchart"
+						// },
+						// {
+						// 	name: "piechart"
+						// },
+						// {
+						// 	name: "polarchart"
+						// },
+						// {
+						// 	name: "ringchart"
+						// },
+						// {
+						// 	name: "scatterchart"
+						// },{
+						// 	name: "splinechart"
+						// },{
+						// 	name: "waterfallchart"
+						// }
 					]
 				}
 			}
@@ -41,6 +41,14 @@ module.exports = function(grunt) {
 				src: [
 					"./built/brcharts/tools", 
 					"./built/brcharts/utils",
+					"./built/brcharts/columnchart.js",
+					"./built/brcharts/piechart.js",
+					"./built/brcharts/polarchart.js",
+					"./built/brcharts/ringchart.js",
+					"./built/brcharts/scatterchart.js",
+					"./built/brcharts/splinechart.js",
+					"./built/brcharts/tschart.js",
+					"./built/brcharts/waterfallchart.js",
 					"./built/brcharts/chart.js",
 					"./built/brcharts/build.txt"
 				] 
