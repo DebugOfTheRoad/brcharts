@@ -7,49 +7,60 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require(["../charts/brcharts"],function(brcharts){
+            require([
+                "../charts/splinechart"
+            ],function(SplineChart){
                 $(function(){
-                    var data=[{"taskName":"任务1","响应时间":5,"运行时间":5,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":8,"运行时间":10,"datetime":"1417593120633"}, 
-                              {"taskName":"任务1","响应时间":7,"运行时间":5,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":6,"运行时间":10,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":13,"运行时间":5,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":9,"运行时间":10,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":4,"运行时间":5,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":2,"运行时间":10,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":6,"运行时间":5,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":50,"运行时间":10,"datetime":"1417593120633"},
-                              {"taskName":"任务1","响应时间":11,"运行时间":5,"datetime":"1418592120633"},
-                              {"taskName":"任务1","响应时间":17,"运行时间":10,"datetime":"1427592120733"},
-                              {"taskName":"任务2","响应时间":25,"运行时间":30,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":18,"运行时间":35,"datetime":"1417593120633"}, 
-                              {"taskName":"任务2","响应时间":20,"运行时间":30,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":32,"运行时间":35,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":30,"运行时间":30,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":41,"运行时间":35,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":29,"运行时间":30,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":34,"运行时间":35,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":45,"运行时间":30,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":40,"运行时间":35,"datetime":"1417593120633"},
-                              {"taskName":"任务2","响应时间":55,"运行时间":30,"datetime":"1418592120633"},
-                              {"taskName":"任务2","响应时间":64,"运行时间":35,"datetime":"1427592120733"}
+                    var data=[{"taskName":"任务1","RE_TIME":5,"RUN_TIME":5,"datetime":"1360454400000"},
+                              {"taskName":"任务1","RE_TIME":8,"RUN_TIME":10,"datetime":"1360454400000"}, 
+                              {"taskName":"任务1","RE_TIME":7,"RUN_TIME":5,"datetime":"1364169600000"},
+                              {"taskName":"任务1","RE_TIME":6,"RUN_TIME":10,"datetime":"1365033600000"},
+                              {"taskName":"任务1","RE_TIME":13,"RUN_TIME":5,"datetime":"1370304000000"},
+                              {"taskName":"任务1","RE_TIME":9,"RUN_TIME":10,"datetime":"1375574400000"},
+                              {"taskName":"任务1","RE_TIME":4,"RUN_TIME":5,"datetime":"1386115200000"},
+                              {"taskName":"任务1","RE_TIME":2,"RUN_TIME":10,"datetime":"1389225600000"},
+                              {"taskName":"任务1","RE_TIME":6,"RUN_TIME":5,"datetime":"1394496000000"},
+                              {"taskName":"任务1","RE_TIME":50,"RUN_TIME":10,"datetime":"1400112000000"},
+                              {"taskName":"任务1","RE_TIME":11,"RUN_TIME":5,"datetime":"1402444800000"},
+                              {"taskName":"任务1","RE_TIME":17,"RUN_TIME":10,"datetime":"1403740800000"},
+                              {"taskName":"任务2","RE_TIME":25,"RUN_TIME":30,"datetime":"1360454400000"},
+                              {"taskName":"任务2","RE_TIME":18,"RUN_TIME":35,"datetime":"1360454400000"}, 
+                              {"taskName":"任务2","RE_TIME":20,"RUN_TIME":30,"datetime":"1364169600000"},
+                              {"taskName":"任务2","RE_TIME":32,"RUN_TIME":35,"datetime":"1365033600000"},
+                              {"taskName":"任务2","RE_TIME":30,"RUN_TIME":30,"datetime":"1370304000000"},
+                              {"taskName":"任务2","RE_TIME":41,"RUN_TIME":35,"datetime":"1375574400000"},
+                              {"taskName":"任务2","RE_TIME":29,"RUN_TIME":30,"datetime":"1386115200000"},
+                              {"taskName":"任务2","RE_TIME":34,"RUN_TIME":35,"datetime":"1389225600000"},
+                              {"taskName":"任务2","RE_TIME":45,"RUN_TIME":30,"datetime":"1394496000000"},
+                              {"taskName":"任务2","RE_TIME":40,"RUN_TIME":35,"datetime":"1400112000000"},
+                              {"taskName":"任务2","RE_TIME":55,"RUN_TIME":30,"datetime":"1402444800000"},
+                              {"taskName":"任务2","RE_TIME":64,"RUN_TIME":35,"datetime":"1403740800000"}
                     ];
                     var option={
                         containerId:"container", //放置HighCharts容器对应的ID
-                        shows:["响应时间"],         //要显示的指标
+                        shows:["RE_TIME"],         //要显示的指标
                         title:"曲线图",          //标题
                         subtitle:"副标题",
                         yTitle:"时间",         //y轴标题
                         yUnit:"s" ,             //y轴单位
                         xName:"datetime" ,        //x轴显示的名称 
+                        fields:{                  //控制反显
+                            "RE_TIME":"响应时间",
+                            "RUN_TIME":"运行时间"
+                        },
                         group:"taskName"      //分组依据
                     };
                     
-                    var chart=new brcharts.SplineChart();
+                    var chart=new SplineChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();
              /////////////////////////////////////////////////////////////////
+                      var shows=["RUN_TIME"],
+                      yTitle="RUN_TIME",
+                      yUnit="s",
+                      type="line";
+
                     //是否显示图例
                     $("#inputIsShowLegend").on("click",function(){
                        if($(this).is(":checked")){
@@ -73,12 +84,7 @@
                     //是否显示多Y轴
                     $("#inputIsShowY").on("click",function(){  
 
-                        if($(this).is(":checked")){
-                            var shows=["运行时间"],
-                                yTitle="运行时间",
-                                yUnit="ml",
-                                type="line";
-                            
+                        if($(this).is(":checked")){                          
                             chart.addYAxis(shows,yTitle,yUnit,type); 
                         }else{
                             chart.setData(data);
@@ -261,12 +267,7 @@
 
                     //设置x轴起始值
                     $("#setXStart").on("click",function(){
-                        var start=$("#x_start").val(); 
-                        if(start.match(",")){
-                              var start_arr=start.split(","); 
-                              //将时间类型转化为UTC格式
-                              start=Date.UTC(start_arr[0],start_arr[1]-1,start_arr[2]);
-                          }  
+                        var start=$("#x_start").val();   
                         chart.setXStart(start);
                         chart.draw();
                     });
@@ -274,21 +275,14 @@
                     //设置y轴起始值
                     $("#setYStart").on("click",function(){
                         var start=$("#y_start").val();   
-                        chart.setYStart(start);
+                        chart.setYStart(Number(start));
                         chart.draw();
                     });
 
                     //设置x轴结束值
                     $("#setXEnd").on("click",function(){
-                        var end=$("#x_end").val(); 
-                        if(end.match(",")){
-                              var end_arr=end.split(","); 
-                              //将时间类型转化为UTC格式
-                              end=Date.UTC(end_arr[0],end_arr[1]-1,end_arr[2]);
-                          }else{
-                              end=Number(end);
-                          }  
-                        chart.setXEnd(end);
+                        var end=$("#x_end").val();  
+                        chart.setXEnd(Number(end));
                         chart.draw();
                     });
 
@@ -334,11 +328,6 @@
                        var text=$("#line_text").val();
                        var color=$("#line_color").val();
                        if(select==1){
-                          if(value.match(",")){
-                              var varue_arr=value.split(","); 
-                              //将时间类型转化为UTC格式
-                              value=Date.UTC(varue_arr[0],varue_arr[1]-1,varue_arr[2]);
-                          }
                           chart.addXLine(value,text,color);
                        }else{
                           chart.addYLine(value,text,color); 
@@ -353,13 +342,6 @@
                        var to=$("#band_to").val();
                        var color=$("#band_color").val();
                        if(select==1){
-                          if(from.match(",")){
-                              var from_arr=from.split(","); 
-                              var to_arr=to.split(",");
-                              //将时间类型转化为UTC格式
-                              from=Date.UTC(from_arr[0],from_arr[1]-1,from_arr[2]);
-                              to=Date.UTC(to_arr[0],to_arr[1]-1,to_arr[2]);
-                          }
                           chart.addXBand(from,to,color);
                        }else{
                           chart.addYBand(from,to,color); 
@@ -368,34 +350,44 @@
                     });
 
                     //添加点
-                    $("#addPoint").on("click",function(){
+                    $("#addPoint").on("click",function(){ 
                         var seriesIndex=Number($("#point_seriesIndex").val()); 
                         var x=$("#point_x").val(); 
-                        if(x.match(",")){
-                              var x_arr=x.split(","); 
-                              //将时间类型转化为UTC格式
-                              x=Date.UTC(x_arr[0],x_arr[1]-1,x_arr[2]);
-                          } 
-                        var y=Number($("#point_y").val());   
-                        chart.addPoint(seriesIndex,x,y);
+                        var y=Number($("#point_y").val()); 
+                        var object={};
+                        if(seriesIndex==0){
+                            object={
+                            taskName:"任务1",
+                            "RE_TIME": y,
+                            datetime: x
+                          };
+                        }else{
+                            object={
+                            taskName:"任务2",
+                            "RE_TIME": y,
+                            datetime: x};
+                        }
+                        chart.addPoint(object);
                     });
 
-                    //更新点
+                    //标记
                     $("#updatePoint").on("click",function(){
                         var seriesIndex=Number($("#update_seriesIndex").val()); 
                         var pointIndex=Number($("#update_pointIndex").val());
-
-                        var x=$("#point_x").val(); 
-                        if(x.match(",")){
-                              var x_arr=x.split(","); 
-                              //将时间类型转化为UTC格式
-                              x=Date.UTC(x_arr[0],x_arr[1]-1,x_arr[2]);
-                          } 
-
                         var color=$("#update_color").val();   
                         var type=$("#update_type").val();   
                         chart.updatePoint(seriesIndex,pointIndex,color,type);
                         chart.draw();
+                    });
+
+                    //更新点
+                    $("#updatePointValue").on("click",function(){   
+                        var object={};
+                        object={
+                            taskName:"任务1",
+                            RE_TIME: 80,
+                            datetime: "1402444800000"};  
+                        chart.updatePointValue(object);    
                     });
 
                     //图例位置
@@ -442,11 +434,6 @@
 
                         chart.draw();
                     });
-
-
-
-
-
                 });
             });
         </script>
@@ -498,12 +485,12 @@
            Y轴刻度间距：<input id="YTickInterval" type="text" value="1"></input>
            <button id="setYTickInterval">确定</button>
            <br>
-           X轴起始值：<input id="x_start" type="text" value="2014,4,10"></input>
+           X轴起始值：<input id="x_start" type="text" value="1370304000000"></input>
            <button id="setXStart">确定</button>
            Y轴起始值：<input id="y_start" type="text" value="0"></input>
            <button id="setYStart">确定</button>
            <br>
-           X轴结束值：<input id="x_end" type="text" value="2015,7,26"></input>
+           X轴结束值：<input id="x_end" type="text" value="1400112000000"></input>
            <button id="setXEnd">确定</button>
            Y轴结束值：<input id="y_end" type="text" value="60"></input>
            <button id="setYEnd">确定</button>
@@ -526,30 +513,28 @@
            <br/>
            《基线》
             <br>
-           位置：<input id="line_value" type="text" value="2014,4,10"></input>
+           位置：<input id="line_value" type="text" value="1389225600000"></input>
            文本：<input id="line_text" type="text" value="基线"></input>
            颜色：<input id="line_color" type="text" value="red"></input>
            <button id="addLine">确定</button>
            <br/>
            《区域》
            <br>
-           开始：<input id="band_from" type="text" value="2014,4,10"></input>
-           结束：<input id="band_to" type="text" value="2015,1,26"></input>
+           开始：<input id="band_from" type="text" value="1375574400000"></input>
+           结束：<input id="band_to" type="text" value="1386115200000"></input>
            颜色：<input id="band_color" type="text" value="yellow"></input>
            <button id="addBand">确定</button>
-           <br/>
-           <label>时间类型年月日以“,”隔开，例如：2014,4,10;数值类型为Number</label>
         </fieldset>
         <fieldset>
           <legend>特殊点</legend>
           《添加点》
           <br>
            系列位置：<input id="point_seriesIndex" type="text" value="0"></input>
-           x：<input id="point_x" type="text" value="2016,1,1"></input>
+           x：<input id="point_x" type="text" value="1418607904319"></input>
            y：<input id="point_y" type="text" value="40"></input>
            <button id="addPoint">添加</button>
            <br>
-          《更新点》
+          《标记》
           <br>
            系列位置：<input id="update_seriesIndex" type="text" value="0"></input>
            下标位置：<input id="update_pointIndex" type="text" value="10"></input>
@@ -557,6 +542,11 @@
            颜色：<input id="update_color" type="text" value="red"></input>
            类型：<input id="update_type" type="text" value="square"></input>
            <button id="updatePoint">更新</button>
+           <br>
+          《更新点》
+          <br>
+          系列位置为0，下标位置为10的点值修改为80：
+          <button id="updatePointValue">确定</button>
 
 
         </fieldset>

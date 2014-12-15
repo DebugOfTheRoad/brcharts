@@ -7,7 +7,7 @@
         <script src="../charts/highcharts/highcharts.src.js"></script>
         <script src="../charts/lib/require.js"></script>  
         <script>
-            require(["../charts/brcharts"],function(brcharts){
+            require(["../charts/columnchart"],function(ColumnChart){
                 $(function(){
                     var data=[{"taskName":"任务1","城市":"北京","在线人数":520000,"报警次数":52000,"降雨量":174},
                                 {"taskName":"任务1","城市":"天津","在线人数":360000,"报警次数":36000,"降雨量":185},
@@ -39,7 +39,7 @@
                         stacking: "normal"     //堆栈显示类型：null=禁用，normal=正常，percent=百分比 
                     };
                    
-                    var chart=new brcharts.ColumnChart();
+                    var chart=new ColumnChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();
@@ -364,8 +364,40 @@
                               //将时间类型转化为UTC格式
                               x=Date.UTC(x_arr[0],x_arr[1]-1,x_arr[2]);
                           } 
-                        var y=Number($("#point_y").val());   
-                        chart.addPoint(seriesIndex,x,y);
+                        var y=Number($("#point_y").val()); 
+                        var object={};  
+                        if(seriesIndex==0){
+                            object={
+                            taskName:"任务1",
+                            城市: x,
+                            在线人数:y};
+                        }else if(seriesIndex==1){
+                            object={
+                            taskName:"任务1",
+                            城市: x,
+                            报警次数:y};
+                        }else if(seriesIndex==2){
+                            object={
+                            taskName:"任务2",
+                            城市: x,
+                            在线人数:y};
+                        }else if(seriesIndex==3){
+                            object={
+                            taskName:"任务2",
+                            城市: x,
+                            报警次数:y};
+                        }else if(seriesIndex==4){
+                            object={
+                            taskName:"任务3",
+                            城市: x,
+                            在线人数:y};
+                        }else{
+                            object={
+                            taskName:"任务3",
+                            城市: x,
+                            报警次数:y};
+                        }
+                        chart.addPoint(object);
                     });
 
                     //更新点
@@ -481,17 +513,17 @@
            Y轴Label：<input id="y_degree" type="text" value="45"></input>
            <button id="setYLabelRotation">旋转</button>
            <br>
-           Y轴刻度间距：<input id="YTickInterval" type="text" value="1"></input>
+           Y轴刻度间距：<input id="YTickInterval" type="text" value="100000"></input>
            <button id="setYTickInterval">确定</button>
            <br>
-           X轴起始值：<input id="x_start" type="text" value="2014,4,10"></input>
+           X轴起始值：<input id="x_start" type="text" value="1"></input>
            <button id="setXStart">确定</button>
-           Y轴起始值：<input id="y_start" type="text" value="0"></input>
+           Y轴起始值：<input id="y_start" type="text" value="250000"></input>
            <button id="setYStart">确定</button>
            <br>
-           X轴结束值：<input id="x_end" type="text" value="2015,7,26"></input>
+           X轴结束值：<input id="x_end" type="text" value="3"></input>
            <button id="setXEnd">确定</button>
-           Y轴结束值：<input id="y_end" type="text" value="60"></input>
+           Y轴结束值：<input id="y_end" type="text" value="1250000"></input>
            <button id="setYEnd">确定</button>
            <br>
            X轴标尺宽度：<input id="x_CrossHairsWidth" type="text" value="3"></input>
@@ -512,15 +544,15 @@
            <br/>
            《基线》
             <br>
-           位置：<input id="line_value" type="text" value="2014,4,10"></input>
+           位置：<input id="line_value" type="text" value="1"></input>
            文本：<input id="line_text" type="text" value="基线"></input>
            颜色：<input id="line_color" type="text" value="red"></input>
            <button id="addLine">确定</button>
            <br/>
            《区域》
            <br>
-           开始：<input id="band_from" type="text" value="2014,4,10"></input>
-           结束：<input id="band_to" type="text" value="2015,1,26"></input>
+           开始：<input id="band_from" type="text" value="2"></input>
+           结束：<input id="band_to" type="text" value="3"></input>
            颜色：<input id="band_color" type="text" value="yellow"></input>
            <button id="addBand">确定</button>
            <br/>
@@ -528,11 +560,11 @@
         </fieldset>
         <fieldset>
           <legend>特殊点</legend>
-          《添加点》
+          《添加数据》
           <br>
            系列位置：<input id="point_seriesIndex" type="text" value="0"></input>
-           x：<input id="point_x" type="text" value="2016,1,1"></input>
-           y：<input id="point_y" type="text" value="40"></input>
+           x：<input id="point_x" type="text" value="南京"></input>
+           y：<input id="point_y" type="text" value="400000"></input>
            <button id="addPoint">添加</button>
         </fieldset>
         <fieldset>

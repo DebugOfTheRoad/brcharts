@@ -5,12 +5,17 @@ define(["../utils/utils"],function(utils){
             var chart=this,
                 option=chart.option,
                 xAxis=option.xAxis,
+                highchart=chart.highchart,
+                xDataType=highchart.xAxis[0].options.type,
                 plotLines;
 
             if(xAxis&&xAxis.plotLines){
                 plotLines=xAxis.plotLines;
             }else{
                 plotLines=[];
+            }
+            if(xDataType=='datetime'){
+                value=utils.longTimeToUTC(Number(value));
             }
 
             plotLines.push({
@@ -69,12 +74,19 @@ define(["../utils/utils"],function(utils){
                 var chart=this,
                 option=chart.option,
                 xAxis=option.xAxis,
+                highchart=chart.highchart,
+                xDataType=highchart.xAxis[0].options.type,
                 plotBands;
             if(xAxis&&xAxis.plotBands){
                 plotBands=xAxis.plotBands;
             }else{
                 plotBands=[];
             }
+            if(xDataType=='datetime'){
+                from=utils.longTimeToUTC(Number(from));
+                to=utils.longTimeToUTC(Number(to));
+            }
+
             plotBands.push({
                     from:from?from:null,
                     to:to?to:null,
@@ -275,8 +287,13 @@ define(["../utils/utils"],function(utils){
         //设置x轴起始值
         setXStart:function(start){
             var chart=this,
+            highchart=chart.highchart,
+            xDataType=highchart.xAxis[0].options.type,
             option={};
-            
+            if(xDataType=='datetime'){    
+                start=utils.longTimeToUTC(Number(start));   
+            }
+          
             option.xAxis={
                     min: start        
             };
@@ -299,7 +316,12 @@ define(["../utils/utils"],function(utils){
         //设置x轴结束值
         setXEnd:function(end){
             var chart=this,
+            highchart=chart.highchart,
+            xDataType=highchart.xAxis[0].options.type,
             option={};
+            if(xDataType=='datetime'){
+                end=utils.longTimeToUTC(Number(end));
+            }
             
             option.xAxis={
                     max: end        

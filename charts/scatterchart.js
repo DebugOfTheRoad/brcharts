@@ -39,6 +39,7 @@ define([
 	    			option={},
 	    			series=option.series=[],	 			
 	    			userOption=chart.userOption,    //option
+	    			fields=userOption.fields,
 	    			xName=userOption.xName,   //x轴显示的名称 
 	    			shows=userOption.shows,   //要显示的指标
 	    			groupMap=chart.groupMap,
@@ -50,7 +51,7 @@ define([
                 	for (var i = 0; i < groupKeys.length; i++) {  
 		                for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};
-		                        oneSeries.name=groupKeys[i]+"("+shows[j]+")";
+		                        oneSeries.name=groupKeys[i]+"("+utils.getDisplayName(fields,shows[j])+")";
 		                        oneSeries.data=[];
 		                    var data=groupMap.get(groupKeys[i]);
 		                	for (var k = 0; k < data.length; k++) {

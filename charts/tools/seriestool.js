@@ -10,7 +10,7 @@ define(["../utils/utils"],function(utils){
                 xDataType=highchart.xAxis[0].options.type;
 
             if(xDataType=='datetime'){
-                var x=utils.longTimeToUTC(Number(yObj[xName]));
+                var x=utils.longTimeToUTC(Number(yObj[xName]));  
                 for (var i = 0; i < shows.length; i++) {
                     if(yObj.hasOwnProperty(shows[i])){  
                         var y=Number(yObj[shows[i]]);
@@ -65,12 +65,13 @@ define(["../utils/utils"],function(utils){
             var chart=this,
                 shows=chart.userOption.shows,
                 xName=chart.userOption.xName,
+                fields=chart.userOption.fields,
                 group=chart.userOption.group,
                 highchart=chart.highchart,
                 xDataType=highchart.xAxis[0].options.type;
 
             if(xDataType=='datetime'){  
-                var x=yObj[xName];  
+                var x=utils.longTimeToUTC(Number(yObj[xName])); 
                 for (var i = 0; i < shows.length; i++) {
                     if(yObj.hasOwnProperty(shows[i])){  
                         var y=Number(yObj[shows[i]]);
@@ -79,7 +80,7 @@ define(["../utils/utils"],function(utils){
                             var groupKeys=groupMap.keys();
                             for (var j = 0; j < groupKeys.length; j++) {
                                 if(groupKeys[j]==yObj[group]){  
-                                    chart.updatePointValueByArg(groupKeys[j]+"("+[shows[i]]+")",x,y);
+                                    chart.updatePointValueByArg(groupKeys[j]+"("+utils.getDisplayName(fields,shows[i])+")",x,y);
                                 }
                             };
                         }else{
@@ -98,9 +99,8 @@ define(["../utils/utils"],function(utils){
         },
 
         //更新点的值
-        updatePointValueByArg:function(show,xValue,yValue){   
+        updatePointValueByArg:function(show,xValue,yValue){  
             var chart=this,
-                xName=chart.userOption.xName,
                 highchart=chart.highchart,
                 series=highchart.options.series,
                 seriesIndex,
@@ -110,7 +110,7 @@ define(["../utils/utils"],function(utils){
                     seriesIndex=i;
                     var data=series[i].data;  
                     for (var j = 0; j < data.length; j++) {
-                        if(data[j][xName]==xValue){   
+                        if(data[j]["x"]==xValue){    
                             pointIndex=j;
                             break;
                         }

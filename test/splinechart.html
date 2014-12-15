@@ -9,22 +9,26 @@
         <script>
             require(["../charts/brcharts"],function(brcharts){
                 $(function(){
-                    var data=[{"taskName":"任务1","响应时间":5,"运行时间":5,"datetime":"1417592120633"},//Tue 
-                              {"taskName":"任务1","响应时间":8,"运行时间":5,"datetime":"1417592149278"}, 
-                              {"taskName":"任务1","响应时间":7,"运行时间":5,"datetime":"1417592157577"},
+                    var data=[{"taskName":"任务1","RE_TIME":5,"RUN_TIME":5,"datetime":"1360454400000"},//Tue 
+                              {"taskName":"任务1","RE_TIME":8,"RUN_TIME":5,"datetime":"1394496000000"}, 
+                              {"taskName":"任务1","RE_TIME":7,"RUN_TIME":5,"datetime":"1402444800000"},
                               
-                              {"taskName":"任务2","响应时间":25,"运行时间":30,"datetime":"1417592120633"},
-                              {"taskName":"任务2","响应时间":18,"运行时间":30,"datetime":"1417592149278"}, 
-                              {"taskName":"任务2","响应时间":20,"运行时间":30,"datetime":"1417592157577"}
+                              {"taskName":"任务2","RE_TIME":25,"RUN_TIME":30,"datetime":"1360454400000"},
+                              {"taskName":"任务2","RE_TIME":18,"RUN_TIME":30,"datetime":"1394496000000"}, 
+                              {"taskName":"任务2","RE_TIME":20,"RUN_TIME":30,"datetime":"1402444800000"}
                     ];
                     var option={
                         containerId:"container", //放置HighCharts容器对应的ID
-                        shows:["响应时间"],         //要显示的指标
+                        shows:["RE_TIME"],         //要显示的指标
                         title:"曲线图",          //标题
                         subtitle:"副标题",
                         yTitle:"时间",         //y轴标题
                         yUnit:"s" ,             //y轴单位
                         xName:"datetime" ,        //x轴显示的名称 
+                        fields:{                  //控制反显
+                            "RE_TIME":"响应时间",
+                            "RUN_TIME":"运行时间"
+                        },
                         group:"taskName"      //分组依据
                     };
                     

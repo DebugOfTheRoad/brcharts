@@ -41,6 +41,7 @@ define([
 	    			option={},
 	    			series=option.series=[],	
 	    			userOption=chart.userOption,    //option 
+	    			fields=userOption.fields,
 	    			shows=userOption.shows,         //y轴要显示的指标
 	    			group=userOption.group;         //分组依据
 	    
@@ -50,7 +51,7 @@ define([
                 	for (var i = 0; i < groupKeys.length; i++) {
 		                for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};
-		                        oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
+		                        oneSeries.name=groupKeys[i]+"("+utils.getDisplayName(fields,shows[j])+")";
 		                        oneSeries.stack=groupKeys[i];             //堆栈显示依据
 		                        oneSeries.data=[];
 		                    var data=groupMap.get(groupKeys[i]);

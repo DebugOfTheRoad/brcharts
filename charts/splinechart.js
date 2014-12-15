@@ -2,7 +2,7 @@ define([
 	"./chart",
 	"./utils/utils",
 ],function(Chart,utils){
-	var SplineChart={	
+	var SplineChart={	  
 	    	//基础数据处理
 	        processData:function(){
            		var chart=this,
@@ -38,24 +38,25 @@ define([
 	    			option={},
 	    			series=option.series=[],		
 	    			userOption=chart.userOption,   //option
+	    			fields=userOption.fields,
 	    			xName=userOption.xName,
 	    			shows=userOption.shows,       //要显示的指标
                 	group=userOption.group;
 
-                if(group){
+                if(group){    
                 	var groupMap=chart.groupMap;
                 	var groupKeys=groupMap.keys();  
                 	for (var i = 0; i < groupKeys.length; i++) {  
 		                for (var j = 0; j < shows.length ; j++) {  
 		                	var oneSeries={};
-		                        oneSeries.name=groupKeys[i]+"("+shows[j]+")";
+		                        oneSeries.name=groupKeys[i]+"("+utils.getDisplayName(fields,shows[j]) +")";
 		                        oneSeries.data=[];
 		                    var data=groupMap.get(groupKeys[i]);
 		                	for (var k = 0; k < data.length; k++) {
 		                		if(data[k].hasOwnProperty(shows[j])){
 		                			var oneData={};
 		                			utils.extend(oneData,data[k]);  //将所有属性赋予给数据
-				    			    oneData.x=utils.longTimeToUTC(Number(data[k][xName]));
+				    			    oneData.x=utils.longTimeToUTC(Number(data[k][xName]));  
 			      					oneData.y=data[k][shows[j]];
 			      					oneSeries.data.push(oneData);
 		                		}
