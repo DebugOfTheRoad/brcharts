@@ -508,9 +508,9 @@ define(["../utils/utils"],function(utils){
             }
 
             var yAxis={
-                id: yTitle,
+                id: yUnit,
                 title: {
-                   text: yTitle+"("+yUnit+")"
+                   text: yTitle+"(单位:"+yUnit+")"
                 },
                 yUnit: yUnit,
                 lineWidth: 1,
@@ -519,6 +519,7 @@ define(["../utils/utils"],function(utils){
                 opposite: true
             };
             highchart.addAxis(yAxis);    //添加Y轴 
+            chart.userOption.shows=chart.userOption.shows.concat(shows);
 
             if(group){
                     var groupMap=chart.groupMap;
@@ -533,7 +534,7 @@ define(["../utils/utils"],function(utils){
                             }
                             oneSeries.name=groupKeys[i]+"("+[shows[j]]+")";
                             oneSeries.stack=groupKeys[i];             //堆栈显示依据
-                            oneSeries.yAxis=yTitle;
+                            oneSeries.yAxis=yUnit;
                             oneSeries.data=[];
                             var data=groupMap.get(groupKeys[i]);
                             for (var k = 0; k < data.length; k++) {
@@ -559,7 +560,7 @@ define(["../utils/utils"],function(utils){
                                 oneSeries.type=chart.option.chart.type;
                             }
                             oneSeries.name=[shows[j]];
-                            oneSeries.yAxis=yTitle;
+                            oneSeries.yAxis=yUnit;
                             oneSeries.data=[];
                             var data=chart.userData;
                             for (var k = 0; k < data.length; k++) {

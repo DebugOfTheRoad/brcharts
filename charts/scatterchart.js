@@ -26,8 +26,7 @@ define([
 
 	    		option.chart={
 	    			type:"scatter",     //类型
-					inverted:false,   //X轴和Y轴是否倒换
-	                zoomType:"xy"       //缩放方向 
+					inverted:false   //X轴和Y轴是否倒换 
 	    		};
 
 	            utils.merge(true,chart.option,option);

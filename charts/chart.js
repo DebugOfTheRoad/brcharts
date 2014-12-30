@@ -127,7 +127,7 @@ define([
                 yTitle=userOption.yTitle;
             }
             if(userOption.yUnit){
-                yTitle+="("+userOption.yUnit+")";
+                yTitle+="(单位："+userOption.yUnit+")";
             }
 
             option.yAxis={

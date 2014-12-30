@@ -20,8 +20,7 @@ define([
 
     		option.chart={
     			type:"waterfall",
-				inverted:true,
-                zoomType:"y"
+				inverted:true
     		};
 
             utils.merge(true,chart.option,option);

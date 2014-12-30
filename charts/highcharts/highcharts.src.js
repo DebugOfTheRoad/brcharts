@@ -103,18 +103,18 @@ var UNDEFINED,
 	isFixedTooltip=false;
 
 	// tooltip fixed
-	$(doc).on("keydown",function(event){
-		var keyCode=event.keyCode;
-		if(keyCode==17){
-			isFixedTooltip=true;
-		} 
-	});
-	$(doc).on("keyup",function(event){
-		var keyCode=event.keyCode;
-		if(keyCode==17){
-			isFixedTooltip=false;
-		} 
-	});
+	// $(doc).on("keydown",function(event){
+	// 	var keyCode=event.keyCode;
+	// 	if(keyCode==17){
+	// 		isFixedTooltip=true;
+	// 	} 
+	// });
+	// $(doc).on("keyup",function(event){
+	// 	var keyCode=event.keyCode;
+	// 	if(keyCode==17){
+	// 		isFixedTooltip=false;
+	// 	} 
+	// });
 
 // The Highcharts namespace
 if (win.Highcharts) {

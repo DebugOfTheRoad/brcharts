@@ -77,6 +77,17 @@ define(["../utils/utils"],function(utils){
 
             Highcharts.setOptions({lang:langOption});
 
+
+        },
+
+        //设置高度
+        setHeight:function(height){
+            var chart=this,
+                containerId=chart.userOption.containerId,
+                highchart=chart.highchart;
+                option={};
+            $("#"+containerId).css("height",height);
+            highchart.reflow();
         }
 	};
 	return OtherTool;

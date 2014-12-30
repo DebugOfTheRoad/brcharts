@@ -28,8 +28,7 @@ define([
    
 	    		option.chart={
 	    			type:"column",     //类型
-					inverted:inverted,   //X轴和Y轴是否倒换
-	                zoomType:"xy"       //缩放方向 
+					inverted:inverted   //X轴和Y轴是否倒换
 	    		};
 
 	            utils.merge(true,chart.option,option);

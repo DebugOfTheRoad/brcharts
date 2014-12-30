@@ -47,14 +47,14 @@
                         fields:{                  //控制反显
                             "RE_TIME":"响应时间",
                             "RUN_TIME":"运行时间"
-                        },
-                        group:"taskName"      //分组依据
+                        }
                     };
                     
                     var chart=new SplineChart();
                     chart.setData(data);
                     chart.setOption(option);
                     chart.draw();
+                    chart.setHeight(800);
              /////////////////////////////////////////////////////////////////
                       var shows=["RUN_TIME"],
                       yTitle="RUN_TIME",
@@ -364,7 +364,7 @@
                         }else{
                             object={
                             taskName:"任务2",
-                            "RE_TIME": y,
+                            "RUN_TIME": y,
                             datetime: x};
                         }
                         chart.addPoint(object);
