@@ -5675,9 +5675,9 @@ Tick.prototype = {
 						.css(css)
 						.add(axis.labelGroup) :
 					null;
-			if(axis.isXAxis&&chart.userOptions.xAxis.onLabelMouseOver){
-				tick.label.on("mouseover",function(e){chart.userOptions.xAxis.onLabelMouseOver(e,str)});
-			}
+			// if(axis.isXAxis&&chart.userOptions.xAxis.onLabelMouseOver){
+			// 	tick.label.on("mouseover",function(e){chart.userOptions.xAxis.onLabelMouseOver(e,str)});
+			// }
 
 			// Set the tick baseline and correct for rotation (#1764)
 			axis.tickBaseline = chart.renderer.fontMetrics(labelOptions.style.fontSize, label).b;
@@ -15763,6 +15763,35 @@ defaultPlotOptions.ring = merge(defaultSeriesOptions, {
 	}
 });
 
+
+/**
+ * Set the default options for matrix
+ */
+defaultPlotOptions.matrix = merge(defaultSeriesOptions, {
+	borderColor: '#FFFFFF',
+	borderWidth: 1,
+	center: [null, null],
+	clip: false,
+	colorByPoint: true, // always true for pies
+	ignoreHiddenPoint: true,
+	//innerSize: 0,
+	legendType: 'point',
+	marker: null, // point options are specified in the base options
+	size: null,
+	showInLegend: false,
+	slicedOffset: 10,
+	states: {
+		hover: {
+			brightness: 0.1,
+			shadow: false
+		}
+	},
+	stickyTracking: false,
+	tooltip: {
+		followPointer: true
+	}
+});
+
 /**
  * Extended point object for pies
  */
@@ -16020,6 +16049,136 @@ var RingPoint = extendClass(Point, {
 
  RingSeries = extendClass(Series, RingSeries);
  seriesTypes.ring = RingSeries;
+
+
+ var MatrixPoint = extendClass(Point, {
+	haloPath:function(){
+		return null;
+	}
+});
+
+/**
+ * The Matrix series class
+ */
+ var MatrixSeries = {
+ 	type:'matrix',
+ 	isCartesian: false,
+ 	trackerGroups: ['group'],
+ 	singularTooltips: true,
+	getCenter: CenteredSeriesMixin.getCenter,
+	pointClass: MatrixPoint,
+ 	getSymbol: noop,
+
+ 	drawGraph: null,
+
+ 	/**
+	 * Draw the data points
+	 */
+	drawPoints: function () {
+		var series = this,
+			seriesOptions = series.options,
+			chart = series.chart,
+			options = chart.options,
+			plotHeight = chart.plotHeight,
+			plotWidth = chart.plotWidth,
+			renderer = chart.renderer
+			points = series.points;
+
+		var root = {
+			x:0,
+			y:0,
+			w:plotWidth,
+			h:plotHeight
+		};
+
+		var center = series.getCenter();
+		var offsetX = center[0] - root.w/2;
+		var offsetY = center[1] - root.h/2;
+
+		var retPoints = [];
+		series.getPosition(root,series.points,1,retPoints);
+
+		each(retPoints, function (spoint) {
+			var point = spoint.point;
+			if(point.graphic) {
+				point.graphic.destroy();
+			}
+			point.graphic = graphic = renderer.rect(spoint.x + offsetX,spoint.y + offsetY,spoint.w,spoint.h)
+			.attr({
+		        fill: point.color
+		    })
+		    .add(series.group);
+		});
+	},
+	getPosition:function (parent, sourcePoints, flag ,retPoints) {
+		var series = this;
+		if(sourcePoints.length%2 == 1){
+			sourcePoints.push({y:0});
+		}
+		var arrBigger = [];
+		var arrSmaller = [];
+		var sumBigger = 0;
+		var sumSmaller = 0;
+		for (var i = 0; i < sourcePoints.length / 2; i++) {
+			arrBigger.push(sourcePoints[i]);
+			sumBigger += sourcePoints[i].y;
+		}
+		for (var i = sourcePoints.length / 2; i < sourcePoints.length; i++) {
+			arrSmaller.push(sourcePoints[i]);
+			sumSmaller += sourcePoints[i].y;
+		};
+		if(flag == 0){
+			var top = {
+				x:parent.x,
+				y:parent.y,
+				w:parent.w,
+				h:parent.h*sumBigger/(sumBigger+sumSmaller)
+			};
+			var down = {
+				x:parent.x,
+				y:parent.y+parent.h*sumBigger/(sumBigger+sumSmaller),
+				w:parent.w,
+				h:parent.h*sumSmaller/(sumBigger+sumSmaller)
+			};
+			if(sourcePoints.length>2){
+				series.getPosition(top,arrBigger,1,retPoints);
+				series.getPosition(down,arrSmaller,1,retPoints);
+			}else{
+				top.point = sourcePoints[0];
+				down.point = sourcePoints[1];
+				retPoints.push(top);
+				retPoints.push(down);
+			}
+		}
+		if(flag == 1){
+			var left = {
+				x:parent.x,
+				y:parent.y,
+				w:parent.w * sumBigger / (sumBigger+sumSmaller),
+				h:parent.h
+			};
+			var right = {
+				x:parent.x+parent.w * sumBigger/(sumBigger+sumSmaller),
+				y:parent.y,
+				w:parent.w*sumSmaller/(sumBigger+sumSmaller),
+				h:parent.h
+			};
+			if(sourcePoints.length>2){
+				series.getPosition(left,arrBigger,0,retPoints);
+				series.getPosition(right,arrSmaller,0,retPoints);
+			}else{
+				left.point = sourcePoints[0];
+				right.point = sourcePoints[1];
+				retPoints.push(left);
+				retPoints.push(right);
+			}
+
+		}
+	}
+}
+
+ MatrixSeries = extendClass(Series, MatrixSeries);
+ seriesTypes.matrix = MatrixSeries;
 
 /**
  * The Pie series class
@@ -17231,6 +17390,10 @@ if (seriesTypes.pie) {
 
 if (seriesTypes.ring) {
 	seriesTypes.ring.prototype.drawTracker = TrackerMixin.drawTrackerPoint;
+}
+
+if (seriesTypes.matrix) {
+	seriesTypes.matrix.prototype.drawTracker = TrackerMixin.drawTrackerPoint;
 }
 
 if (seriesTypes.scatter) {

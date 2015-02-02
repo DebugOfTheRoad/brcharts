@@ -1,6 +1,6 @@
 # Summary
 
-* [简介](README.md)
+* [brcharts1.0 简介](README.md)
 * [基础接口](2.md)
    * [曲线图](3.md)
    * [柱状图](4.md)

@@ -6,8 +6,9 @@ define([
     "./scatterchart",
     "./splinechart",
     "./tschart",
-    "./waterfallchart"
-],function(ColumnChart,PieChart,PolarChart,RingChart,ScatterChart,SplineChart,TsChart,WaterfallChart){
+    "./waterfallchart",
+    "./matrixchart"
+],function(ColumnChart,PieChart,PolarChart,RingChart,ScatterChart,SplineChart,TsChart,WaterfallChart,MatrixChart){
 	return {
 		ColumnChart:ColumnChart,
 		PieChart:PieChart,
@@ -16,6 +17,7 @@ define([
 		ScatterChart:ScatterChart,
 		SplineChart:SplineChart,
 		TsChart:TsChart,
-		WaterfallChart:WaterfallChart
+		WaterfallChart:WaterfallChart,
+		MatrixChart:MatrixChart
 	}
 });

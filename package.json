@@ -1,6 +1,6 @@
 {
 	"name": "brcharts",
-	"version": "0.9.0",
+	"version": "1.0.0",
 	"description": "bonree charts",
 	"main": "main.js",
 	"dependencies": {

@@ -1,0 +1,76 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>柱状图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require(["../charts/brcharts"],function(brcharts){
+                $(function(){
+                    var data=[{"taskName":"任务1","城市":"北京","P_NUM":520000,"COUNT":0.0001}];
+                    var option={
+                        containerId: "container",    //放置HighCharts容器对应的ID
+                        shows: ["P_NUM"],         //要显示的指标
+                        title: "柱状图",             //标题
+                        subtitle: "副标题",          //副标题  
+                        yTitle: "测试",          //y轴标题   
+                        yUnit:"次",  
+                        xName: "城市",               //x轴显示的名称 
+                        fields:{
+                            P_NUM:"人数",
+                            COUNT:"个数"
+                        }  
+                    };
+                   
+                    var chart=new brcharts.ColumnChart();
+                    chart.setData(data);
+                    chart.setOption(option);
+                     chart.isInverted(true);
+                     //chart.setYEnd(1);
+                    chart.draw();
+
+
+                   chart.addYAxis(["COUNT"],"","个");
+                   var option={};
+                   option.yAxis={
+                    title:{
+                    text:""
+                 },
+                 tickLength:0.0001,
+                 yUnit:"个"
+            }
+            var yAxisArray=[];
+            yAxisArray.push(option);
+            yAxisArray.push(chart.option.yTitle);
+                    chart.option.yTitle=yAxisArray;
+
+           var data1=[
+                {"taskName":"任务1","城市":"天津","P_NUM":360000,"COUNT":0.0001},
+                {"taskName":"任务1","城市":"郑州","P_NUM":780000,"COUNT":0.0001},
+                {"taskName":"任务1","城市":"广州","P_NUM":690000,"COUNT":0.0001},
+                {"taskName":"任务1","城市":"上海","P_NUM":840000,"COUNT":0.0001}
+              ];
+
+            for (var i = 0; i < data1.length; i++) {
+                chart.addPoint(data1[i]); 
+            };
+            chart.setHeight(200+i*30);
+
+            var yAxis = chart.highchart.yAxis;
+            for (var i = 0; i < yAxis.length; i++) {
+                if(yAxis[i].max<0.001){
+                    yAxis[i].setExtremes(0,1);
+                }
+            };
+            
+        });
+    });  
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:450px;"></div>
+        <div id="container1" style="height:450px;"></div>
+    </body>
+</html>

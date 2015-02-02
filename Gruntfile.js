@@ -13,25 +13,6 @@ module.exports = function(grunt) {
 						{
 							name: "brcharts"
 						}
-						// {
-						// 	name: "columnchart"
-						// },
-						// {
-						// 	name: "piechart"
-						// },
-						// {
-						// 	name: "polarchart"
-						// },
-						// {
-						// 	name: "ringchart"
-						// },
-						// {
-						// 	name: "scatterchart"
-						// },{
-						// 	name: "splinechart"
-						// },{
-						// 	name: "waterfallchart"
-						// }
 					]
 				}
 			}
@@ -52,7 +33,13 @@ module.exports = function(grunt) {
 					"./built/brcharts/chart.js",
 					"./built/brcharts/build.txt"
 				] 
-			} 
+			},
+			deploy:{
+				src: [
+					"./built/brcharts/brcharts.js", 
+					"./built/release/built/brcharts/brcharts.js"
+				]
+			}
 		},
 		uglify: {
 			options: {
@@ -61,7 +48,7 @@ module.exports = function(grunt) {
 			build: {
 				expand:true,
 				src: "./built/brcharts/**/*.js",
-				dest: "./built/brcharts/min"
+				dest: "./built/release"
 			}
 		},
 		copy:{
@@ -71,11 +58,19 @@ module.exports = function(grunt) {
 			},
 			minmain:{
 				src:"./main.js",
-				dest:"./built/brcharts/min/built/brcharts/main.js"
+				dest:"./built/release/built/brcharts/main.js"
 			},
 			doc:{
 				src:["./test/**","./charts/**"],
 				dest:"./doc/brcharts/"
+			},
+			brcharts:{
+				src:"./built/brcharts/brcharts.js",
+				dest:"./built/brcharts/brcharts<%= pkg.version %>.js"
+			},
+			brchartsmin:{
+				src:"./built/release/built/brcharts/brcharts.js",
+				dest:"./built/release/built/brcharts/brcharts<%= pkg.version %>.js"
 			}
 		},
 	});
@@ -87,6 +82,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
 	// 默认被执行的任务列表。
-	grunt.registerTask("default", ["requirejs","clean","uglify","copy"]);
+	grunt.registerTask("default", ["requirejs","clean:build","uglify","copy","clean:deploy"]);
 
 };
