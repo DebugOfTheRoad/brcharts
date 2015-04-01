@@ -58,6 +58,7 @@ define(["../utils/utils"],function(utils){
             var langOption;
 
             var en={
+                unit:"unit"
             };
 
             var zh_cn={
@@ -67,7 +68,8 @@ define(["../utils/utils"],function(utils){
                 resetZoom:"重置",
                 resetZoomTitle:"缩放",
                 shortMonths:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-                weekdays:["周一","周二","周三","周四","周五","周六","周日"]
+                weekdays:["周一","周二","周三","周四","周五","周六","周日"],
+                unit:"单位"
             };
 
             switch(lang){

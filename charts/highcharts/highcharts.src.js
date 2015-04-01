@@ -15768,8 +15768,6 @@ defaultPlotOptions.ring = merge(defaultSeriesOptions, {
  * Set the default options for matrix
  */
 defaultPlotOptions.matrix = merge(defaultSeriesOptions, {
-	borderColor: '#FFFFFF',
-	borderWidth: 1,
 	center: [null, null],
 	clip: false,
 	colorByPoint: true, // always true for pies
@@ -15780,10 +15778,15 @@ defaultPlotOptions.matrix = merge(defaultSeriesOptions, {
 	size: null,
 	showInLegend: false,
 	slicedOffset: 10,
-	states: {
-		hover: {
-			brightness: 0.1,
-			shadow: false
+	dataLabels: {
+		enabled: true,
+		formatter: function () {
+			return this.point.name;
+		},
+		style:{
+			color:'#FFFFFF',
+			textShadow: '0 0 1px black',
+			fontSize: '12px'
 		}
 	},
 	stickyTracking: false,
@@ -16097,17 +16100,56 @@ var RingPoint = extendClass(Point, {
 
 		var retPoints = [];
 		series.getPosition(root,series.points,1,retPoints);
-
+		dataLabelsGroup = series.plotGroup(
+				'dataLabelsGroup',
+				'data-labels',
+				options.defer ? HIDDEN : VISIBLE,
+				options.zIndex || 6
+		);
 		each(retPoints, function (spoint) {
 			var point = spoint.point;
 			if(point.graphic) {
 				point.graphic.destroy();
 			}
-			point.graphic = graphic = renderer.rect(spoint.x + offsetX,spoint.y + offsetY,spoint.w,spoint.h)
+			point.graphic = graphic = renderer.rect(spoint.x + offsetX,spoint.y + offsetY,spoint.w,spoint.h,3,1)
 			.attr({
 		        fill: point.color
 		    })
 		    .add(series.group);
+		    if(point.dataLabel) {
+				point.dataLabel.destroy();
+			}
+
+			var xx = spoint.x + offsetX;
+			var yy = spoint.y + offsetY;
+			var height = spoint.h;
+			var width = spoint.w;
+			var str = "";
+			if(point.getLabelConfig){
+				str=seriesOptions.dataLabels.formatter.call(point.getLabelConfig());
+			}
+		    dataLabel = point.dataLabel = renderer['label'](
+						str,
+						xx,
+						yy,
+						null,
+						null,
+						null,
+						false
+			).add(dataLabelsGroup)
+			.css(seriesOptions.dataLabels.style);
+			var box=dataLabel.getBBox();
+			if(width>box.width && height>box.height){
+				dataLabel.attr({
+					x:xx + (width - box.width)/2,
+					y:yy + (height - box.height)/2
+				});
+			}else{
+				dataLabel.attr({
+					display:"none"
+				});
+			}
+			
 		});
 	},
 	getPosition:function (parent, sourcePoints, flag ,retPoints) {

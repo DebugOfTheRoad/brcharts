@@ -1,0 +1,65 @@
+<!DOCTYpE html publiC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>区域图</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <script src="../charts/lib/jquery-1.8.3.js"></script>
+        <script src="../charts/highcharts/highcharts.src.js"></script>
+        <script src="../charts/lib/require.js"></script>  
+        <script>
+            require(["../charts/brcharts"],function(brcharts){
+                $(function(){
+                    var data=[{"taskName":"任务1","RE_TIME":5,"RUN_TIME":5,"datetime":"1360454400000"},
+                              {"taskName":"任务1","RE_TIME":8,"RUN_TIME":10,"datetime":"1360454400000"}, 
+                              {"taskName":"任务1","RE_TIME":7,"RUN_TIME":5,"datetime":"1364169600000"},
+                              {"taskName":"任务1","RE_TIME":6,"RUN_TIME":10,"datetime":"1365033600000"},
+                              {"taskName":"任务1","RE_TIME":13,"RUN_TIME":5,"datetime":"1370304000000"},
+                              {"taskName":"任务1","RE_TIME":9,"RUN_TIME":10,"datetime":"1375574400000"},
+                              {"taskName":"任务1","RE_TIME":4,"RUN_TIME":5,"datetime":"1386115200000"},
+                              {"taskName":"任务1","RE_TIME":2,"RUN_TIME":10,"datetime":"1389225600000"},
+                              {"taskName":"任务1","RE_TIME":6,"RUN_TIME":5,"datetime":"1394496000000"},
+                              {"taskName":"任务1","RE_TIME":50,"RUN_TIME":10,"datetime":"1400112000000"},
+                              {"taskName":"任务1","RE_TIME":11,"RUN_TIME":5,"datetime":"1402444800000"},
+                              {"taskName":"任务1","RE_TIME":17,"RUN_TIME":10,"datetime":"1403740800000"},
+                              {"taskName":"任务2","RE_TIME":25,"RUN_TIME":30,"datetime":"1360454400000"},
+                              {"taskName":"任务2","RE_TIME":18,"RUN_TIME":35,"datetime":"1360454400000"}, 
+                              {"taskName":"任务2","RE_TIME":20,"RUN_TIME":30,"datetime":"1364169600000"},
+                              {"taskName":"任务2","RE_TIME":32,"RUN_TIME":35,"datetime":"1365033600000"},
+                              {"taskName":"任务2","RE_TIME":30,"RUN_TIME":30,"datetime":"1370304000000"},
+                              {"taskName":"任务2","RE_TIME":41,"RUN_TIME":35,"datetime":"1375574400000"},
+                              {"taskName":"任务2","RE_TIME":29,"RUN_TIME":30,"datetime":"1386115200000"},
+                              {"taskName":"任务2","RE_TIME":34,"RUN_TIME":35,"datetime":"1389225600000"},
+                              {"taskName":"任务2","RE_TIME":45,"RUN_TIME":30,"datetime":"1394496000000"},
+                              {"taskName":"任务2","RE_TIME":40,"RUN_TIME":35,"datetime":"1400112000000"},
+                              {"taskName":"任务2","RE_TIME":55,"RUN_TIME":30,"datetime":"1402444800000"},
+                              {"taskName":"任务2","RE_TIME":64,"RUN_TIME":35,"datetime":"1403740800000"}
+                    ];
+                    var option={
+                        containerId:"container", //放置HighCharts容器对应的ID
+                        shows:["RE_TIME"],         //要显示的指标
+                        title:"区域图",          //标题
+                        subtitle:"副标题",       //副标题  
+                        yTitle:"次数",         //y轴标题
+                        //yUnit:"kg" ,             //y轴单位
+                        xName:"datetime" ,     //x轴显示的名称
+                        fields:{                  //控制反显
+                            "RE_TIME":"响应时间",
+                            "RUN_TIME":"运行时间"
+                        },
+                        group:"taskName"      //分组依据 
+                    };
+                    
+                    var chart=new brcharts.AreaChart();
+                    chart.setData(data);
+                    chart.setOption(option);
+
+                  
+                    chart.draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="height:200px;"></div>
+    </body>
+</html>

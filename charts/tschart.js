@@ -156,7 +156,6 @@ define([
         //重写mergeLegendOption
         mergeLegendOption:function(){
             var chart=this,
-                fields=chart.fields,
                 dimension=chart.userOption.dimension,
                 option={};
 
@@ -168,7 +167,7 @@ define([
                     if(dimension)
                         return this.name;
                     else
-                        return utils.getDisplayName(fields,this.name);
+                        return utils.getDisplayName(this.chart.userOptions.fields,this.name);
                 }
             };
 

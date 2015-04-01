@@ -7,8 +7,11 @@ define([
     "./splinechart",
     "./tschart",
     "./waterfallchart",
-    "./matrixchart"
-],function(ColumnChart,PieChart,PolarChart,RingChart,ScatterChart,SplineChart,TsChart,WaterfallChart,MatrixChart){
+    "./matrixchart",
+    "./bubblechart",
+    "./areachart",
+    "./utils/utils"
+],function(ColumnChart,PieChart,PolarChart,RingChart,ScatterChart,SplineChart,TsChart,WaterfallChart,MatrixChart,BubbleChart,AreaChart,utils){
 	return {
 		ColumnChart:ColumnChart,
 		PieChart:PieChart,
@@ -18,6 +21,9 @@ define([
 		SplineChart:SplineChart,
 		TsChart:TsChart,
 		WaterfallChart:WaterfallChart,
-		MatrixChart:MatrixChart
+		MatrixChart:MatrixChart,
+		BubbleChart:BubbleChart,
+		AreaChart:AreaChart,
+		utils:utils
 	}
 });

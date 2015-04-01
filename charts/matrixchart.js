@@ -41,7 +41,102 @@ define([
 
                 series.push(oneSeries);
 	            utils.merge(true,chart.option,option);
-	    	}
+	    	},
+
+	    	//重写mergeTooltipOption    --------提示框设置 
+	    	mergeTooltipOption:function(){
+	    		var chart=this,
+	    			fields=chart.fields,
+    			    option={};
+	    		    option.tooltip={
+                         shared: false,
+                         formatter: function () {
+                         	var yUnit=this.series.yAxis.options.yUnit || "";
+                            return '<b>'+utils.getDisplayName(fields,this.point.name)+'</b><br>'+
+                                    '<b>' + utils.getDisplayName(fields,this.series.name) + ':</b> ' + this.y +yUnit;
+                         }
+	    		    };  
+	    		
+	    		 utils.merge(true,chart.option,option);
+	    	},
+	    	 //设置是否显示Label
+	        isShowLabel:function(isShow){
+	            var chart=this,
+	                option={};
+
+	            option.plotOptions={
+	                matrix:{
+	                    dataLabels:{
+	                        enabled: isShow
+	                    }
+    	    		}
+	            };
+	            utils.merge(true,chart.option,option);
+	        },
+
+	        //设置label的颜色
+	        setLabelColor:function(color){
+	        	var chart=this,
+	        		option={};
+
+	        	option.plotOptions={
+	                matrix:{
+	                    dataLabels:{
+	                        style: {
+	                        	color:color
+	                        }
+	                    }
+    	    		}
+	            };
+	            utils.merge(true,chart.option,option);
+	        },
+
+	        //设置label的字体大小
+	        setLabelFontSize:function(fontSize){
+	        	var chart=this,
+	        		option={};
+
+	        	option.plotOptions={
+	                matrix:{
+	                    dataLabels:{
+	                        style: {
+	                        	fontSize:fontSize+"px"
+	                        }
+	                    }
+    	    		}
+	            };
+	            utils.merge(true,chart.option,option);
+	        },
+
+	        //设置label的样式
+	        setLabelStyle:function(style){
+	        	var chart=this,
+	        		option={};
+
+	        	option.plotOptions={
+	                matrix:{
+	                    dataLabels:{
+	                        style: style
+	                    }
+    	    		}
+	            };
+	            utils.merge(true,chart.option,option);
+	        },
+
+	    	//设置label的格式化函数
+	        setLabelFormatter:function(formatter){
+	        	var chart=this,
+	        		option={};
+
+	        	option.plotOptions={
+	                matrix:{
+	                    dataLabels:{
+	                        formatter: formatter
+	                    }
+    	    		}
+	            };
+	            utils.merge(true,chart.option,option);
+	        },
 	        
 	};
 	

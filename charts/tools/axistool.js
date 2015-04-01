@@ -510,7 +510,7 @@ define(["../utils/utils"],function(utils){
             var yAxis={
                 id: yUnit,
                 title: {
-                   text: yTitle+"(单位:"+yUnit+")"
+                   text: yTitle
                 },
                 yUnit: yUnit,
                 lineWidth: 1,

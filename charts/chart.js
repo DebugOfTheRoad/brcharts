@@ -8,6 +8,20 @@ define([
     "./tools/tooltiptool",
 ],function(utils,AxisTool,LegendTool,OtherTool,SeriesTool,TitleTool,TooltipTool){
     /**
+        * 默认的option
+        * 如果要修改通用的基础属性，修改这个
+        * 该属性将影响所有图形
+        */
+    var defaultOption = {
+        title:{},
+        subtitle:{},
+        credits:{
+            enabled:false
+        },
+        //colors:['#87CEFF', '#76EE00', '#836FFF', '#FF8C69', '#FF7F00', '#FF4040', '#FF69B4', '#DDA0DD', '#CAE1FF', '#DCDCDC', '#ABABAB', '#8B8B00', '#48D1CC', '#383838', '#1C86EE', '#00CD66']
+        colors:["#5F398E" ,"#383A96" ,"#3368AC" ,"#569CBE" ,"#2494A5" ,"#130E58" ,"#2CB34E" ,"#55A238" ,"#AEC785" ,"#CD1848" ,"#B59E3F" ,"#AD833A" ,"#AD623A" ,"#914E41" ,"#6C3636"]
+    };
+    /**
      * Chart 类，
      * 图的基类,其他图继承于该类
      * 该类对外提供highcharts的option参数
@@ -18,19 +32,6 @@ define([
     };
 
     Chart.prototype={
-        /**
-        * 默认的option
-        * 如果要修改通用的基础属性，修改这个
-        * 该属性将影响所有图形
-        */
-        option:{
-            title:{},
-            subtitle:{},
-            credits:{
-                enabled:false
-            },
-            colors:['#87CEFF', '#76EE00', '#836FFF', '#FF8C69', '#FF7F00', '#FF4040', '#FF69B4', '#DDA0DD', '#CAE1FF', '#DCDCDC', '#ABABAB', '#8B8B00', '#48D1CC', '#383838', '#1C86EE', '#00CD66']
-        },
         userOption:{},
 
         init:function(){
@@ -46,7 +47,11 @@ define([
         setOption:function(userOption){
             var chart=this;
             chart.userOption=userOption;
-            chart.fields=userOption.fields;
+            chart.fields=userOption.fields||{};
+            chart.option = {
+                fields:chart.fields
+            };
+            utils.extend(chart.option,defaultOption);
 
             chart.processData();        //基础数据处理
             chart.initChartOption();    //设置chart的option
@@ -126,9 +131,6 @@ define([
             if(userOption.yTitle){
                 yTitle=userOption.yTitle;
             }
-            if(userOption.yUnit){
-                yTitle+="(单位："+userOption.yUnit+")";
-            }
 
             option.yAxis={
                  title:{
@@ -143,14 +145,13 @@ define([
          //初始化图例
          initLegendOption:function(){
             var chart=this,
-                option=chart.option,
-                fields=chart.fields;
+                option=chart.option;
 
             option.legend={
                 isAlignment:true,
                 isFold:true,
                 labelFormatter:function(){
-                    return utils.getDisplayName(fields,this.name);
+                    return utils.getDisplayName(this.chart.userOptions.fields,this.name);
                 }
             };
 

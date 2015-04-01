@@ -25,7 +25,10 @@
                    
                     var chart=new brcharts.MatrixChart();
                     chart.setData(data);
-                    chart.setOption(option);    
+                    chart.setOption(option);
+                    // chart.setLabelFormatter(function(){
+                    //     return "a";
+                    // });   
                     chart.draw();
                 });
             });

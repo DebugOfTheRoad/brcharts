@@ -1,8 +1,8 @@
 ({
 	baseUrl: "./charts",
 	modules: [
-		{
-			name: "brcharts"
-		}
+	{
+		name: "brcharts"
+	}		
 	]
 })
